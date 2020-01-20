@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user xmlns="http://www.ftn.uns.ac.rs/tim14" user_id="id">
+    <first_name>Marieta</first_name>
+    <last_name>Rakos</last_name>
+    <email>email</email>
+    <password>pass</password>
+    <roles>author</roles>
+</user>
