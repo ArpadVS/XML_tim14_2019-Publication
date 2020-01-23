@@ -5,4 +5,6 @@
     <email>email</email>
     <password>pass</password>
     <roles>author</roles>
+    <expertise_list>expert</expertise_list>
+    <expertise_list>madjionicar</expertise_list>
 </user>

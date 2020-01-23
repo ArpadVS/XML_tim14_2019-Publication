@@ -1,4 +1,4 @@
-package publications.marshalling;
+package publications.util.marshalling;
 
 import java.io.File;
 import java.io.StringWriter;

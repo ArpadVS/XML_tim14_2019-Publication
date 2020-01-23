@@ -1,5 +1,6 @@
 package publications.model.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -21,7 +22,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 		"email",
 		"password",
 		"biography",
-        "roles"
+        "roles",
+        "expertise_list"
     })
 public class User {
 
@@ -42,7 +44,8 @@ public class User {
 	private String biography;
 	@XmlElement(required = true)
 	private List<Role> roles;
-	
+	@XmlElement
+	private List<String> expertise_list;
 	
 	public String getUser_id() {
 		return user_id;
@@ -81,10 +84,28 @@ public class User {
 		this.biography = biography;
 	}
 	public List<Role> getRoles() {
+		if(this.roles == null) {
+			this.roles = new ArrayList<>();
+		}
 		return roles;
 	}
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+	public List<String> getExpertise_list() {
+		if(this.expertise_list == null) {
+			this.expertise_list = new ArrayList<String>();
+		}
+		return expertise_list;
+	}
+	public void setExpertise_list(List<String> expertise_list) {
+		this.expertise_list = expertise_list;
+	}
+	@Override
+	public String toString() {
+		return "User [user_id=" + user_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email="
+				+ email + ", password=" + password + ", biography=" + biography + ", roles=" + roles
+				+ ", expertise_list=" + expertise_list + "]";
 	}
 	
 	
