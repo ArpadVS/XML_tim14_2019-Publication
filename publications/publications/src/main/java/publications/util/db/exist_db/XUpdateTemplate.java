@@ -1,14 +1,14 @@
 package publications.util.db.exist_db;
 
 import org.exist.xupdate.XUpdateProcessor;
-
+import static publications.util.constants.ApplicationConstants.TARGET_NAMESPACE;
 /**
  * http://xmldb-org.sourceforge.net/xupdate/xupdate-wd.html
  * 
  */
 public class XUpdateTemplate {
 
-	public static final String TARGET_NAMESPACE = "http://www.ftn.uns.ac.rs/tim14";
+	
 	
 	/*
 	 * There are two instructions in XUpdate that support insertion of nodes:

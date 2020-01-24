@@ -23,7 +23,7 @@ import org.xmldb.api.modules.XPathQueryService;
 import org.xmldb.api.modules.XQueryService;
 
 import publications.util.db.exist_db.AuthenticationUtilitiesExist.ConnectionProperties;
-import static publications.util.db.exist_db.XUpdateTemplate.TARGET_NAMESPACE;
+import static publications.util.constants.ApplicationConstants.TARGET_NAMESPACE;
 
 @Component
 public class ExistDBManagement {

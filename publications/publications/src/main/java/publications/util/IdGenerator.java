@@ -1,11 +1,8 @@
-package publications.repository;
-
-import java.util.ArrayList;
-import java.util.List;
+package publications.util;
 
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
@@ -13,52 +10,42 @@ import org.xmldb.api.base.XMLDBException;
 
 import publications.exceptions.NotFoundException;
 import publications.model.user.User;
-import publications.util.IdGenerator;
 import publications.util.db.exist_db.ExistDBManagement;
-import publications.util.marshalling.MarshallUser;
 import publications.util.marshalling.UnmarshallingUser;
 import static publications.util.constants.ApplicationConstants.*;
 
-@Repository
-public class UserRepository {
+@Component
+public class IdGenerator {
 
 	@Autowired
 	ExistDBManagement dbManagement;
-
-	@Autowired
-	IdGenerator idGenerator;
 	
-	public User save(User user) throws Exception {
-		String id = USER_ID_PREFIX + idGenerator.generateId();
-		user.setUser_id(id);
-		String user_xml = MarshallUser.marshall(user);
-		dbManagement.save(USER_COLLECTION_ID, user.getUser_id(), user_xml);
-		return user;
-	}
-
-	public User findByExpression(String expression) throws NotFoundException {
+	public int generateId() throws NotFoundException {
 		try {
-			//String xPathExpression = String.format("//user[@user_id='%s']", id);
-			ResourceSet result = dbManagement.executeXPath(USER_COLLECTION_ID, expression);
+			//iz nekog razloga nmg da selektujem samo jedan element unutar usera
+			String exp = "for $u in /. return $u";
+			System.out.println(exp);
+			ResourceSet result = dbManagement.executeXQuery(USER_COLLECTION_ID, exp, "");
 
 			if (result == null) {
-				return null;
+				throw new Exception();
 			}
-
+			
 			ResourceIterator i = result.getIterator();
 			Resource res = null;
 			User user = null;
 
-			if (!i.hasMoreResources()) {
-				System.out.println("Not found");
-				throw new NotFoundException("Could not find requested user");
-			}
+			int max_id = 0;
 			while (i.hasMoreResources()) {
-
+				System.out.println("******");
 				try {
 					res = i.nextResource();
+					System.out.println(res.getContent().toString());
 					user = UnmarshallingUser.unmarshall((res.getContent().toString()));
-
+					int current_id = Integer.parseInt(user.getUser_id().split("-")[1]);
+					if (current_id > max_id) {
+						max_id = current_id;
+					}
 				} finally {
 					// don't forget to cleanup resources
 					try {
@@ -69,12 +56,14 @@ public class UserRepository {
 				}
 			}
 
-			return user;
+			System.out.println(max_id);
+			return ++max_id;
 
 		} catch (Exception e) {
-			throw new NotFoundException("Could not find requested user");
+			System.out.println("greska");
+			e.printStackTrace();
+			return -1;
+			
 		}
 	}
-	
-	
 }
