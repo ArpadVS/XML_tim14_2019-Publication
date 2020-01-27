@@ -9,7 +9,6 @@ import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
-
 import publications.util.db.fuseki_jena.AuthenticationUtilitiesFuseki.ConnectionPropertiesFuseki;
 //import static publications.util.constants.ApplicationConstants.RDF_FILE_PATH;
 
@@ -57,4 +56,16 @@ public class FusekiManagement {
 		processor.execute();
 
 	}
+	
+	public static void delete(String graphUri) throws Exception
+    {
+        ConnectionPropertiesFuseki conn = AuthenticationUtilitiesFuseki.loadProperties();
+        String spargDelete = SparqlUtil.dropGraph(conn.dataEndpoint +  graphUri);
+        
+		// UpdateRequest represents a unit of execution
+		UpdateRequest update = UpdateFactory.create(spargDelete);
+
+		UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, conn.updateEndpoint);
+		processor.execute();
+    }
 }

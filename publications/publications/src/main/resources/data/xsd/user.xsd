@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://ftn.uns.ac.rs/tim14" xmlns:tim14="http://ftn.uns.ac.rs/tim14">
+    targetNamespace="http://www.ftn.uns.ac.rs/tim14" xmlns:tim14="http://www.ftn.uns.ac.rs/tim14">
 
     <xs:element name="user" type="tim14:TUser"/>
     <xs:complexType name="TUser">
@@ -22,14 +22,9 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="biography" type="xs:string"/>
-            <xs:element name="roles">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="3" name="role" type="tim14:TRole"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
+            <xs:element name="biography" type="xs:string" minOccurs="0"/>
+            <xs:element maxOccurs="3" name="role" type="tim14:TRole"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="expertise" type="xs:string"/>
         </xs:sequence>
         <xs:attribute name="user_id" type="xs:ID"/>
     </xs:complexType>
