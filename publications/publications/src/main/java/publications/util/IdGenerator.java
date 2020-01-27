@@ -22,18 +22,16 @@ public class IdGenerator {
 	
 	public int generateId() throws NotFoundException {
 		try {
-			//iz nekog razloga nmg da selektujem samo jedan element unutar usera
-			String exp = "for $u in /. return $u";
-			System.out.println(exp);
-			ResourceSet result = dbManagement.executeXQuery(USER_COLLECTION_ID, exp, "");
-
+			//String exp = "for $u in /. return $u/user";
+			//System.out.println(exp);
+			//ResourceSet result = dbManagement.executeXQuery(USER_COLLECTION_ID, exp, "");
+			ResourceSet result = dbManagement.executeXPath(USER_COLLECTION_ID, "data(//user/@user_id)");
 			if (result == null) {
 				throw new Exception();
 			}
 			
 			ResourceIterator i = result.getIterator();
 			Resource res = null;
-			User user = null;
 
 			int max_id = 0;
 			while (i.hasMoreResources()) {
@@ -41,8 +39,8 @@ public class IdGenerator {
 				try {
 					res = i.nextResource();
 					System.out.println(res.getContent().toString());
-					user = UnmarshallingUser.unmarshall((res.getContent().toString()));
-					int current_id = Integer.parseInt(user.getUser_id().split("-")[1]);
+					//user = UnmarshallingUser.unmarshall((res.getContent().toString()));
+					int current_id = Integer.parseInt(res.getContent().toString().split("-")[1]);
 					if (current_id > max_id) {
 						max_id = current_id;
 					}
