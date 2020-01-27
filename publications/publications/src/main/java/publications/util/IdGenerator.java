@@ -20,12 +20,12 @@ public class IdGenerator {
 	@Autowired
 	ExistDBManagement dbManagement;
 	
-	public int generateId() throws NotFoundException {
+	public int generateId(String collection_id, String entity) throws NotFoundException {
 		try {
 			//String exp = "for $u in /. return $u/user";
 			//System.out.println(exp);
 			//ResourceSet result = dbManagement.executeXQuery(USER_COLLECTION_ID, exp, "");
-			ResourceSet result = dbManagement.executeXPath(USER_COLLECTION_ID, "data(//user/@user_id)");
+			ResourceSet result = dbManagement.executeXPath(collection_id, "data(//"+entity+"/@"+entity+"_id)");
 			if (result == null) {
 				throw new Exception();
 			}
@@ -39,7 +39,6 @@ public class IdGenerator {
 				try {
 					res = i.nextResource();
 					System.out.println(res.getContent().toString());
-					//user = UnmarshallingUser.unmarshall((res.getContent().toString()));
 					int current_id = Integer.parseInt(res.getContent().toString().split("-")[1]);
 					if (current_id > max_id) {
 						max_id = current_id;

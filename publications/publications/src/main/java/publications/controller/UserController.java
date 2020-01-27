@@ -80,4 +80,14 @@ public class UserController {
 		
 		return new ResponseEntity<>(userService.update(userId, user), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
+	public ResponseEntity<String> getUserHTML(@PathVariable(value = "id") String userId) throws Exception{
+		return new ResponseEntity<>(userService.getUserHTML(userId), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<byte[]> getUserPDF(@PathVariable(value = "id") String userId) throws Exception{
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }
