@@ -88,6 +88,6 @@ public class UserController {
 	
 	@GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> getUserPDF(@PathVariable(value = "id") String userId) throws Exception{
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(userService.getUserPDF(userId).toByteArray(), HttpStatus.OK);
 	}
 }

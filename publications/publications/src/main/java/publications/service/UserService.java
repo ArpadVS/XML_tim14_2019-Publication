@@ -1,6 +1,7 @@
 package publications.service;
 
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import publications.repository.UserRepository;
 import publications.util.dom_parser.DOMParser;
 import publications.util.marshalling.MarshallUser;
 import publications.util.transformations.HTMLTransformer;
+import publications.util.transformations.XSLFOTransformer;
+
 import static publications.util.constants.ApplicationConstants.*;
 
 @Service
@@ -25,6 +28,9 @@ public class UserService {
 	
 	@Autowired
 	HTMLTransformer htmlTransformer;
+	
+	@Autowired 
+	XSLFOTransformer xslfoTransformer;
 	
 	public User save(User user) throws Exception {
 		return userRepository.save(user);
@@ -54,6 +60,13 @@ public class UserService {
 		String res = htmlTransformer.generateHTML(xmlUser, XSLT_PATH_PREFIX+"/user.xsl");
 		System.out.println(res);
 		return res;
+	}
+	
+	public ByteArrayOutputStream getUserPDF(String id) throws Exception {
+		String xPathExpression = String.format("//user[@user_id='%s']", id);
+		User user = userRepository.findByExpression(xPathExpression);
+		String xmlUser = MarshallUser.marshall(user);
+		return xslfoTransformer.generatePDF(xmlUser, XSLT_FO_PATH_PREFIX + "/user_fo.xsl");
 	}
 	public String delete(String userId) throws Exception {
 		userRepository.removeUser(userId);
