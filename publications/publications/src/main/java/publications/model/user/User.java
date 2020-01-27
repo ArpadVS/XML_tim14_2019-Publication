@@ -16,21 +16,14 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "user")
-@XmlType(name = "", propOrder = {
-		"first_name",
-		"last_name",
-		"email",
-		"password",
-		"biography",
-        "roles",
-        "expertise_list"
-    })
+@XmlType(name = "", propOrder = { "first_name", "last_name", "email", "password", "biography", "role",
+		"expertise" })
 public class User {
 
 	@XmlAttribute(name = "user_id", required = true)
 	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    //@XmlSchemaType(name = "ID")
+	@XmlID
+	// @XmlSchemaType(name = "ID")
 	private String user_id;
 	@XmlElement(name = "first_name", required = true)
 	private String first_name;
@@ -43,70 +36,87 @@ public class User {
 	@XmlElement(name = "biography", required = false)
 	private String biography;
 	@XmlElement(required = true)
-	private List<Role> roles;
+	private List<Role> role;
 	@XmlElement
-	private List<String> expertise_list;
-	
+	private List<String> expertise;
+
 	public String getUser_id() {
 		return user_id;
 	}
+
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
+
 	public String getFirst_name() {
 		return first_name;
 	}
+
 	public void setFirst_name(String first_name) {
 		this.first_name = first_name;
 	}
+
 	public String getLast_name() {
 		return last_name;
 	}
+
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getBiography() {
 		return biography;
 	}
+
 	public void setBiography(String biography) {
 		this.biography = biography;
 	}
+
 	public List<Role> getRoles() {
-		if(this.roles == null) {
-			this.roles = new ArrayList<>();
+		if(this.role == null) {
+			this.role = new ArrayList<>();
 		}
-		return roles;
+		return role;
 	}
+
 	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+		this.role = roles;
 	}
-	public List<String> getExpertise_list() {
-		if(this.expertise_list == null) {
-			this.expertise_list = new ArrayList<String>();
+
+	public List<String> getExpertise() {
+		if(this.expertise == null) {
+			this.expertise = new ArrayList<>();
 		}
-		return expertise_list;
+		return expertise;
 	}
-	public void setExpertise_list(List<String> expertise_list) {
-		this.expertise_list = expertise_list;
+
+	public void setExpertise(List<String> expertise) {
+		this.expertise = expertise;
 	}
+
 	@Override
 	public String toString() {
 		return "User [user_id=" + user_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email="
-				+ email + ", password=" + password + ", biography=" + biography + ", roles=" + roles
-				+ ", expertise_list=" + expertise_list + "]";
+				+ email + ", password=" + password + ", biography=" + biography + ", roles=" + role + ", expertise="
+				+ expertise + "]";
 	}
+
 	
-	
+
 }

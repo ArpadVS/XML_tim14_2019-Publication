@@ -15,14 +15,17 @@ import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.CompiledExpression;
 import org.xmldb.api.base.Database;
+import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 import org.xmldb.api.modules.XQueryService;
+import org.xmldb.api.modules.XUpdateQueryService;
 
 import publications.util.db.exist_db.AuthenticationUtilitiesExist.ConnectionProperties;
+
 import static publications.util.constants.ApplicationConstants.TARGET_NAMESPACE;
 
 @Component
@@ -37,31 +40,13 @@ public class ExistDBManagement {
 	 */
 	public void save(String collectionId, String documentId, String content) throws Exception {
 
-		conn = AuthenticationUtilitiesExist.loadProperties();
-
-		System.out.println("\t- collection ID: " + collectionId);
-		System.out.println("\t- document ID: " + documentId);
-
-		// initialize database driver
-		System.out.println("[INFO] Loading driver class: " + conn.driver);
-		Class<?> cl = Class.forName(conn.driver);
-
-		// encapsulation of the database driver functionality
-		Database database = (Database) cl.newInstance();
-		database.setProperty("create-database", "true");
-
-		// entry point for the API which enables you to get the Collection reference
-		DatabaseManager.registerDatabase(database);
-
-		// a collection of Resources stored within an XML database
 		Collection col = null;
-		XMLResource res = null;
-
+        XMLResource res = null;
+		
 		try {
 
 			System.out.println("[INFO] Retrieving the collection: " + collectionId);
-			col = getOrCreateCollection(collectionId);
-
+			col = initDBCollection(collectionId);
 			/*
 			 * create new XMLResource with a given id an id is assigned to the new resource
 			 * if left empty (null)
@@ -326,4 +311,66 @@ public class ExistDBManagement {
 			return col;
 		}
 	}
+	
+	public long update(String collectionId, String documentId, String contextXPath, String xmlFragment, String updateTemplate ) throws Exception
+    {
+        long mods = 0;
+        Collection col = initDBCollection(collectionId);
+        try{
+            XUpdateQueryService xupdateService = (XUpdateQueryService) col.getService("XUpdateQueryService", "1.0");
+            xupdateService.setProperty("indent", "yes");
+
+            String command = String.format(updateTemplate, contextXPath, xmlFragment);
+
+            System.out.println(command);
+
+            mods = xupdateService.updateResource(documentId, command);
+            System.out.println("[INFO] " + mods + " modifications processed.");
+            //long mods = xupdateService.updateResource(,String.format(INSERT_AFTER, contextXPath, xmlFragment));
+            return mods;    
+        }
+        finally {
+            if(col != null) {
+                try { 
+                	col.close();
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public long delete(String collectionId,String documentId) throws Exception{
+        long mods = 0;
+        Collection col = initDBCollection(collectionId);
+        try{
+            Resource res = col.getResource(documentId);
+            col.removeResource(res);
+            mods = 1;
+            return mods;
+        }
+        finally {
+            if(col != null) {
+                try { 
+                	col.close();
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }
+        }
+    } 
+    
+    public Collection initDBCollection(String collectionId) throws Exception
+    {
+		conn = AuthenticationUtilitiesExist.loadProperties();
+        Collection col = null;
+        Class<?> cl = Class.forName(conn.driver); 
+        Database database = (Database) cl.newInstance();
+        database.setProperty("create-database", "true");
+        DatabaseManager.registerDatabase(database);
+        col = getOrCreateCollection(collectionId);
+        col = DatabaseManager.getCollection(conn.uri + collectionId, conn.user, conn.password);
+        col.setProperty("indent", "yes");
+        return col;
+    }
 }
