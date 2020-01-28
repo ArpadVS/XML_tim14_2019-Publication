@@ -1,23 +1,36 @@
 package publications.service;
 
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
+import publications.exceptions.MarshallingFailedException;
 import publications.exceptions.NotFoundException;
 import publications.model.user.Role;
 import publications.model.user.User;
 import publications.repository.UserRepository;
 import publications.util.dom_parser.DOMParser;
+import publications.util.marshalling.MarshallUser;
+import publications.util.transformations.HTMLTransformer;
+import publications.util.transformations.XSLFOTransformer;
+
+import static publications.util.constants.ApplicationConstants.*;
 
 @Service
 public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	HTMLTransformer htmlTransformer;
+	
+	@Autowired 
+	XSLFOTransformer xslfoTransformer;
 	
 	public User save(User user) throws Exception {
 		return userRepository.save(user);
@@ -40,6 +53,21 @@ public class UserService {
 		return userRepository.findByExpression(xPathExpression);
 	}
 	
+	public String getUserHTML(String id) throws Exception {
+		String xPathExpression = String.format("//user[@user_id='%s']", id);
+		User user = userRepository.findByExpression(xPathExpression);
+		String xmlUser = MarshallUser.marshall(user);
+		String res = htmlTransformer.generateHTML(xmlUser, XSLT_PATH_PREFIX+"/user.xsl");
+		System.out.println(res);
+		return res;
+	}
+	
+	public ByteArrayOutputStream getUserPDF(String id) throws Exception {
+		String xPathExpression = String.format("//user[@user_id='%s']", id);
+		User user = userRepository.findByExpression(xPathExpression);
+		String xmlUser = MarshallUser.marshall(user);
+		return xslfoTransformer.generatePDF(xmlUser, XSLT_FO_PATH_PREFIX + "/user_fo.xsl");
+	}
 	public String delete(String userId) throws Exception {
 		userRepository.removeUser(userId);
 		return "Successfully deleted user";
