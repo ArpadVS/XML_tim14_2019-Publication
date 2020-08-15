@@ -30,11 +30,10 @@ public class UserRepository {
 
 	@Autowired
 	IdGenerator idGenerator;
-	
+
 	@Autowired
 	DOMParser domParser;
-	
-	
+
 	public User save(User user) throws Exception {
 		String id = USER_ID_PREFIX + idGenerator.generateId(USER_COLLECTION_ID, "user");
 		user.setUser_id(id);
@@ -50,9 +49,10 @@ public class UserRepository {
 		dbManagement.save(USER_COLLECTION_ID, user.getUser_id(), user_xml);
 		return user;
 	}
+
 	public User findByExpression(String expression) throws NotFoundException {
 		try {
-			//String xPathExpression = String.format("//user[@user_id='%s']", id);
+			// String xPathExpression = String.format("//user[@user_id='%s']", id);
 			ResourceSet result = dbManagement.executeXPath(USER_COLLECTION_ID, expression);
 
 			if (result == null) {
@@ -89,14 +89,14 @@ public class UserRepository {
 			throw new NotFoundException("Could not find requested user");
 		}
 	}
+
 	
 	public void removeUser(String userId) throws Exception {
 		long flag = dbManagement.delete(USER_COLLECTION_ID, userId);
-		if(flag == 0) {
+		if (flag == 0) {
 			throw new NotFoundException("Could not find user");
 		}
-		
+
 	}
-	
-	
+
 }

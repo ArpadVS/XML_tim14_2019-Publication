@@ -1,6 +1,7 @@
 package publications.model.user;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,12 +15,19 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "user")
-@XmlType(name = "", propOrder = { "first_name", "last_name", "email", "password", "biography", "role",
+@XmlType(name = "", propOrder = { "first_name", "last_name", "username", "email", "password", "biography", "role",
 		"expertise" })
-public class User {
+public class User implements UserDetails {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@XmlAttribute(name = "user_id", required = true)
 	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
 	@XmlID
@@ -29,6 +37,8 @@ public class User {
 	private String first_name;
 	@XmlElement(name = "last_name", required = true)
 	private String last_name;
+	@XmlElement(name = "username", required = true)
+	private String username;
 	@XmlElement(name = "email", required = true)
 	private String email;
 	@XmlElement(name = "password", required = true)
@@ -115,6 +125,54 @@ public class User {
 		return "User [user_id=" + user_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email="
 				+ email + ", password=" + password + ", biography=" + biography + ", roles=" + role + ", expertise="
 				+ expertise + "]";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return this.role;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.username;
+	}
+
+	public List<Role> getRole() {
+		return role;
+	}
+
+	public void setRole(List<Role> role) {
+		this.role = role;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 	

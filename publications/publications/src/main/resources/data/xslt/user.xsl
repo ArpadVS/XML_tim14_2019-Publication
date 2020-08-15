@@ -6,7 +6,7 @@
         <html>
             <head>
                 
-                <title>USeER</title>
+                <title>USER</title>
             </head>
             <body>
                 

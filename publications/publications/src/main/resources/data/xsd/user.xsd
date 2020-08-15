@@ -7,6 +7,7 @@
         <xs:sequence>
             <xs:element name="first_name" type="xs:string"/>
             <xs:element name="last_name" type="xs:string"/>
+            <xs:element name="username" type="xs:string"/>
             <xs:element name="email">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
@@ -30,9 +31,9 @@
     </xs:complexType>
     <xs:simpleType name="TRole">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="author"/>
-            <xs:enumeration value="reviewer"/>
-            <xs:enumeration value="editor"/>
+            <xs:enumeration value="ROLE_AUTHOR"/>
+            <xs:enumeration value="ROLE_REVIEWER"/>
+            <xs:enumeration value="ROLE_EDITOR"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

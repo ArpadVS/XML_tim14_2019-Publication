@@ -5,6 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
@@ -21,7 +24,7 @@ import publications.util.transformations.XSLFOTransformer;
 import static publications.util.constants.ApplicationConstants.*;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService{
 
 	@Autowired
 	UserRepository userRepository;
@@ -105,5 +108,20 @@ public class UserService {
 		User found = findById(userId);
 		found.getExpertise().remove(expertise);
 		return updateSave(found);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+		String xPathExpression = String.format("//user[username='%s']", username);
+		UserDetails userDetails = null;
+		try {
+			userDetails = userRepository.findByExpression(xPathExpression);
+		} catch (NotFoundException e) {
+			throw new UsernameNotFoundException("User with user name: " + username + " not found");
+		}
+		if (userDetails == null) {
+			throw new UsernameNotFoundException("User with user name: " + username + " not found");
+		}
+		return userDetails;
 	}
 }
