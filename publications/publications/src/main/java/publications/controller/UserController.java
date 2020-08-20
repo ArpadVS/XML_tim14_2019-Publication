@@ -71,7 +71,7 @@ public class UserController {
 	
 	@GetMapping(value = "/unmarshall", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> unmarshall(){
-		return new ResponseEntity<>(UnmarshallingUser.unmarshall("./src/main/resources/data/xml/user1.xml"), HttpStatus.OK);
+		return new ResponseEntity<>(UnmarshallingUser.unmarshallFromFile("./src/main/resources/data/xml/user1.xml"), HttpStatus.OK);
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
@@ -87,7 +87,7 @@ public class UserController {
 	
 	@GetMapping(value = "/email/{email}", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<?> getUserByEmail(@PathVariable(value = "email") String userEmail) throws NotFoundException{
-		//TO DO: konvertovati u neki DTO, ne sme se vratiti password
+		// TODO konvertovati u neki DTO, ne sme se vratiti password
 		return new ResponseEntity<>(userService.findByEmail(userEmail), HttpStatus.OK);
 	}
 	

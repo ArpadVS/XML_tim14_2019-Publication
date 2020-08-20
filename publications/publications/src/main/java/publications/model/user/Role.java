@@ -18,8 +18,7 @@ public enum Role implements GrantedAuthority{
 	ROLE_EDITOR;
 
 	@Override
-	public String getAuthority() {
-		// TODO Auto-generated method stub
+	public String getAuthority() { 
 		return this.name();
 	}
 	

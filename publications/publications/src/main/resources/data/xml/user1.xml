@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<user xmlns="http://www.ftn.uns.ac.rs/tim14" user_id="id">
+<?xml version="1.0" encoding="UTF-8" ?>
+<user xmlns="http://www.ftn.uns.ac.rs/tim14" user_id="user-1">
     <first_name>Marieta</first_name>
     <last_name>Rakos</last_name>
-    <email>email</email>
+    <email>email@gmail.com</email>
     <username>marieta</username>
-    <password>pass</password>
-    <roles>ROLE_AUTHOR</roles>
+    <password>$2y$16$PKlTwuERYLMLs1TEOGKQP.NhlRzyxu9BXZ2t9k0xeRK16vSEwy006</password>
+    <role>ROLE_AUTHOR</role>
+    <role>ROLE_EDITOR</role>
     <expertise_list>expert</expertise_list>
     <expertise_list>madjionicar</expertise_list>
 </user>

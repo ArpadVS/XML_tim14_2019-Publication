@@ -57,7 +57,7 @@ public class IdGenerator {
 			return ++max_id;
 
 		} catch (Exception e) {
-			System.out.println("greska");
+			System.out.println("error");
 			e.printStackTrace();
 			return -1;
 			
