@@ -154,7 +154,9 @@ public class UserController {
                               ));
       SecurityContextHolder.getContext().setAuthentication(authentication);
       User user = (User)authentication.getPrincipal();
-
-      return ResponseEntity.ok( userConverter.toDTO(user, tokenUtils.generateToken(user.getUsername())));
+      List<Role> roles = user.getRoles();
+      String role = roles.get(0).getAuthority();
+      System.out.println(role);
+      return ResponseEntity.ok( userConverter.toDTO(user, tokenUtils.generateToken(user.getUsername(), role)));
   }
 }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class TokenUtils {
@@ -31,8 +33,12 @@ public class TokenUtils {
         return new Date();
     }
 
-    public String generateToken(String username){
+    public String generateToken(String username, String role){
+    	Map<String, Object> claims = new HashMap<>();
+    	claims.put("sub", username);	
+    	claims.put("role", role);
         return Jwts.builder()
+        		.setClaims(claims)
                 .setIssuer(APP_NAME)
                 .setIssuedAt(now())
                 .setSubject(username)

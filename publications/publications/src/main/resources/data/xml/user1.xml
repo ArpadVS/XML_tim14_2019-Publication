@@ -6,7 +6,6 @@
     <username>marieta</username>
     <password>$2y$16$PKlTwuERYLMLs1TEOGKQP.NhlRzyxu9BXZ2t9k0xeRK16vSEwy006</password>
     <role>ROLE_AUTHOR</role>
-    <role>ROLE_EDITOR</role>
     <expertise_list>expert</expertise_list>
     <expertise_list>madjionicar</expertise_list>
 </user>
