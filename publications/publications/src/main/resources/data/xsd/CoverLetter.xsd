@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/cover-letter"
+    xmlns:cl="http://www.ftn.uns.ac.rs/cover-letter" xmlns:cmn="htttp://www.ftn.uns.ac.rs/Shared">
+    <xs:import namespace="htttp://www.ftn.uns.ac.rs/Shared" schemaLocation="Shared.xsd"/>
+    <xs:element name="Cover_letter">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sender_contact" type="cl:TContact"/>
+                <xs:element name="employer_contact" type="cl:TContact"/>
+                <xs:element name="body" type="cl:TBody"/>
+            </xs:sequence>
+            <xs:attribute name="date" type="xs:date"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="TContact">
+        <xs:sequence>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element default="000-000-0000" name="Phone_number">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="\d{3}-\d{3}-\d{4}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Location" type="cmn:TLocation"/>
+            <xs:element name="Email">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[a-z]+@[a-z]+\.[a-z]{2,4}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TBody">
+        <xs:sequence>
+            <xs:element name="Thanksgiving" type="xs:string"/>
+            <xs:element name="Closure" type="cl:TClosure"/>
+            <xs:element name="Paragraphs" type="cmn:TParagraphs"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TClosure">
+        <xs:sequence>
+            <xs:element name="Compliment" type="xs:string"/>
+            <xs:element name="Signature" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

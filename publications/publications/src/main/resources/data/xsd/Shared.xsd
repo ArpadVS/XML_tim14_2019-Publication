@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="htttp://www.ftn.uns.ac.rs/Shared" xmlns:sd="htttp://www.ftn.uns.ac.rs/Shared">
+    <xs:complexType name="TLocation">
+        <xs:sequence>
+            <xs:element name="City" type="xs:string"/>
+            <xs:element name="State" type="xs:string"/>
+            <xs:element name="Country" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TParagraphs">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="Paragraph" type="sd:TParagraph"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType mixed="true" name="TParagraph">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="Bold" type="xs:string"/>
+            <xs:element minOccurs="0" name="Italic" type="xs:string"/>
+            <xs:element minOccurs="0" name="Underline" type="xs:string"/>
+        </xs:choice>
+    </xs:complexType>
+</xs:schema>
