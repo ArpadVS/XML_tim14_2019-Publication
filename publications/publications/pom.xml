@@ -80,7 +80,6 @@
 			<groupId>org.exist-db</groupId>
 			<artifactId>exist-core</artifactId>
 			<version>5.0.0</version>
-			<scope>runtime</scope>
 		</dependency>
 
 
