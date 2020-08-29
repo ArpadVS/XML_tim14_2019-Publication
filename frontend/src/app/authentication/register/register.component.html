@@ -2,8 +2,8 @@
   <div class="list-viewer-wrapper">
     <div id="form-title" class="list-header-title">Register</div>
 
-    <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && onRegisterSubmit()" novalidate>
-      <div class="form-container">  
+    <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()" novalidate>
+      <div class="form-container form-group">  
         <mat-form-field>
             <input id="username"
                    matInput
@@ -40,10 +40,19 @@
                    placeholder="Enter your email" />
           </mat-form-field>
 
+          <mat-form-field appearance="fill">
+            <mat-label>Select role</mat-label>
+              <mat-select id="role"  formControlName="role">
+                <mat-option value="0">Author</mat-option>
+                    <mat-option value="1">Reviewer</mat-option>
+                    <mat-option value="2">Editor</mat-option>
+              </mat-select>
+          </mat-form-field>
+
           <button mat-button type="submit" 
                   id="submit"
                   class="mat-raised-button mat-primary" 
-                  [disabled]="!registerForm.valid">Register</button>
+                  >Register</button>
       </div>
     </form>
   </div>

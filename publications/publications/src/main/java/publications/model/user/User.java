@@ -98,16 +98,7 @@ public class User implements UserDetails {
 		this.biography = biography;
 	}
 
-	public List<Role> getRoles() {
-		if(this.role == null) {
-			this.role = new ArrayList<>();
-		}
-		return role;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.role = roles;
-	}
+	
 
 	public List<String> getExpertise() {
 		if(this.expertise == null) {
@@ -138,6 +129,9 @@ public class User implements UserDetails {
 	}
 
 	public List<Role> getRole() {
+		if(this.role == null) {
+			this.role = new ArrayList<>();
+		}
 		return role;
 	}
 
