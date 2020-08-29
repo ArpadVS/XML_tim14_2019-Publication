@@ -2,7 +2,7 @@
   <div class="list-viewer-wrapper">
     <div id="form-title" class="list-header-title">Register</div>
 
-    <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()" novalidate>
+    <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && onRegisterSubmit()" novalidate>
       <div class="form-container form-group">  
         <mat-form-field>
             <input id="username"
@@ -52,7 +52,7 @@
           <button mat-button type="submit" 
                   id="submit"
                   class="mat-raised-button mat-primary" 
-                  >Register</button>
+                  [disabled]="!registerForm.valid">Register</button>
       </div>
     </form>
   </div>
