@@ -159,4 +159,11 @@ public class UserController {
       System.out.println(role);
       return ResponseEntity.ok( userConverter.toDTO(user, tokenUtils.generateToken(user.getUsername(), role)));
   }
+  
+  @PostMapping(value="/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> register(){
+	  
+	  
+	  return new ResponseEntity(HttpStatus.OK);
+  }
 }
