@@ -8,7 +8,7 @@
             <xs:element name="Country" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="TParagraphs">
+    <xs:complexType name="TParagraphs" mixed="true">
         <xs:sequence>
             <xs:element maxOccurs="unbounded" name="Paragraph" type="TParagraph"/>
         </xs:sequence>
