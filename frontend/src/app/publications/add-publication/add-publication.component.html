@@ -1,1 +1,19 @@
-<p>add-publication works!</p>
+<p>add-publication worksss!</p>
+<div id="form-title" class="list-header-title">Register</div>
+
+    <form [formGroup]="addScientificPaperForm" (ngSubmit)="onAddScientificPaperSubmit()" novalidate>
+      <div class="form-container form-group">  
+        <mat-form-field>
+            <textarea id="scientific_paper"
+                   matInput
+                   formControlName="scientific_paper"
+                   placeholder="Enter your scientific paper" ></textarea>
+          </mat-form-field>
+
+        
+          <button mat-button type="submit" 
+                  id="submit"
+                  class="mat-raised-button mat-primary" 
+                  [disabled]="!addScientificPaperForm.valid">Submit</button>
+      </div>
+    </form>

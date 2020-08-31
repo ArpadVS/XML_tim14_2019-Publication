@@ -35,7 +35,7 @@ public class UserRepository {
 	DOMParser domParser;
 
 	public User save(User user) throws Exception {
-		String id = USER_ID_PREFIX + idGenerator.generateId(USER_COLLECTION_ID, "user");
+		String id = idGenerator.generateRandomID(USER_COLLECTION_ID, USER_ID_PREFIX);
 		user.setUser_id(id);
 		String user_xml = MarshallUser.marshall(user);
 		System.out.println(user_xml);

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { PublicationService } from '../service/publication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-publication',
@@ -6,10 +9,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-publication.component.scss']
 })
 export class AddPublicationComponent implements OnInit {
+  addScientificPaperForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private publicationService: PublicationService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.addScientificPaperForm = this.formBuilder.group({
+      scientific_paper: ['', [Validators.required]]
+    });
+  }
+
+  onAddScientificPaperSubmit(){
+    console.log('ON ADD PAPER');
+    const scientificPaper: string = this.addScientificPaperForm.get('scientific_paper').value;
+    console.log(scientificPaper);
+    this.publicationService.add(scientificPaper);
   }
 
 }

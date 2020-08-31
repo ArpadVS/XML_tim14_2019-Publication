@@ -10,7 +10,6 @@ import { RegisterModel } from 'src/app/models/register.model';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  
   registerForm: FormGroup;
   hide = true;
 
@@ -34,7 +33,7 @@ export class RegisterComponent implements OnInit {
       role: ['', [Validators.required]]
     });
     if (this.authService.isLogedIn()) {
-      this.router.navigate(['certificates/all']);
+      this.router.navigate(['publications/all']);
     }
   }
 

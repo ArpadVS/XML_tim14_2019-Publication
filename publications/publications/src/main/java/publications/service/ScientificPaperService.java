@@ -1,8 +1,71 @@
 package publications.service;
 
+import static publications.util.constants.ApplicationConstants.*;
+
+import java.io.ByteArrayOutputStream;
+
+import org.exist.xmldb.EXistResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.base.XMLDBException;
+
+import publications.exceptions.NotFoundException;
+import publications.model.user.User;
+import publications.repository.ScientificPaperRepository;
+import publications.util.marshalling.MarshallUser;
+import publications.util.marshalling.UnmarshallingUser;
+import publications.util.transformations.HTMLTransformer;
+import publications.util.transformations.XSLFOTransformer;
 
 @Service
 public class ScientificPaperService {
+	
+	@Autowired
+	ScientificPaperRepository scientificPaperRepository;
 
+	@Autowired
+	HTMLTransformer htmlTransformer;
+	
+	@Autowired 
+	XSLFOTransformer xslfoTransformer;
+	
+	public String save(String scientificPaper) throws Exception {
+		return scientificPaperRepository.save(scientificPaper);
+	}
+	
+	public String update(String scientificPaper, String id) throws Exception {
+		return scientificPaperRepository.update(scientificPaper, id);
+	}
+	
+	public String findByID(String id) throws Exception {
+		return scientificPaperRepository.findByID(id);
+	}
+	
+	public String getByHTML(String id) throws Exception {
+		String scientificPaper = scientificPaperRepository.findByID(id);
+		String res = htmlTransformer.generateHTML(scientificPaper, XSLT_PATH_PREFIX+"/ScientificPaper.xsl");
+		return res;
+	}
+	
+	public ByteArrayOutputStream getByPDF(String id) throws Exception {
+		String scientificPaper = scientificPaperRepository.findByID(id);
+		return xslfoTransformer.generatePDF(scientificPaper, XSLT_FO_PATH_PREFIX + "/ScientificPaper_fo.xsl");
+	}
+	
+	public String findByText(String text) throws NotFoundException {
+		// TODO ispisati expression za pretragu. 
+		// Potrebno je da u nekom tekstualnom delu (naslov, podnaslov, paragraf...) sadrzi prosledjeni tekst
+		String scientificPaper = scientificPaperRepository.findByExpression("");
+		return scientificPaper;
+	}
+	
+	public String findByAuthor(String author) throws NotFoundException {
+		// TODO ispisati expression za pretragu. 
+		// Potrebno je pronaci naucni rad po datom autoru
+		String scientificPaper = scientificPaperRepository.findByExpression("");
+		return scientificPaper;
+	}
 }
