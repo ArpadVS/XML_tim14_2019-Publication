@@ -103,6 +103,7 @@ public class ExistDBManagement {
 		try {
 			// get the collection
 			System.out.println("[INFO] Retrieving the collection: " + collectionId);
+			// ukoliko kolekcija ne postoji, NullPointerException
 			col = DatabaseManager.getCollection(conn.uri + collectionId);
 			col.setProperty(OutputKeys.INDENT, "yes");
 

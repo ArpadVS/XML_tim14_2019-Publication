@@ -31,6 +31,7 @@ import publications.exceptions.MarshallingFailedException;
 import publications.exceptions.NotFoundException;
 import publications.model.user.Role;
 import publications.model.user.User;
+import publications.model.user.DTO.RegisterUserDTO;
 import publications.model.user.converters.UserConverter;
 import publications.service.UserService;
 import publications.util.TokenUtils;
@@ -63,7 +64,7 @@ public class UserController {
 		user.setEmail("email");
 		user.setPassword("pass");
 		user.setUser_id("id");
-		user.getRoles().add(Role.ROLE_AUTHOR);
+		user.getRole().add(Role.ROLE_AUTHOR);
 		user.getExpertise().add("expert");
 		user.getExpertise().add("madjionicar");
 		return new ResponseEntity<>(MarshallUser.marshall(user), HttpStatus.OK);
@@ -154,9 +155,16 @@ public class UserController {
                               ));
       SecurityContextHolder.getContext().setAuthentication(authentication);
       User user = (User)authentication.getPrincipal();
-      List<Role> roles = user.getRoles();
+      List<Role> roles = user.getRole();
       String role = roles.get(0).getAuthority();
       System.out.println(role);
       return ResponseEntity.ok( userConverter.toDTO(user, tokenUtils.generateToken(user.getUsername(), role)));
+  }
+  
+  @PostMapping(value="/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> register(@RequestBody RegisterUserDTO dto) throws Exception{
+	  User user = userConverter.toUser(dto);
+	  // TODO uraditi i dodavanje ekspertiza
+	  return new ResponseEntity(userService.save(user), HttpStatus.OK);
   }
 }

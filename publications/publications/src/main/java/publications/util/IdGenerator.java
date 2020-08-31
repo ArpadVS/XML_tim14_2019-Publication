@@ -2,23 +2,77 @@ package publications.util;
 
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.modules.XMLResource;
 
 import publications.exceptions.NotFoundException;
 import publications.model.user.User;
 import publications.util.db.exist_db.ExistDBManagement;
 import publications.util.marshalling.UnmarshallingUser;
 import static publications.util.constants.ApplicationConstants.*;
+import java.security.SecureRandom;
 
 @Component
 public class IdGenerator {
 
 	@Autowired
 	ExistDBManagement dbManagement;
+	
+	@Bean
+	public String alphabet() {
+		return "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	}
+	@Bean
+	public SecureRandom random() {
+		return new SecureRandom();
+	}
+	
+	private String randomID(int length, int spacing, char spacerChar) {
+		String str = "";
+		int spacer = 0;
+		while (length > 0) {
+			if (spacer == spacing) {
+				str += spacerChar;
+				spacer = 0;
+			}
+			length--;
+			spacer++;
+			str += randomChar();
+		}
+		return str;
+	}
+	
+	public String generateRandomID(String collection_id, String prefix) throws Exception {
+		//generisanje random id-a
+		String id = randomID(6, 3, '-');
+		
+		// provera da li postoji dokument sa tim id-em
+		// skoro nikad nece postojati ali za svaki slucaj
+		XMLResource res = dbManagement.findOne(collection_id, prefix + id);
+		boolean found = false;
+		if(res != null) found = true;
+		while(found) {
+			id = randomID(6, 3, '-');
+			res = dbManagement.findOne(collection_id, prefix + id);
+			if(res != null) {
+				found = true;
+			}else {
+				found = false;
+			}
+		}
+		
+		return prefix + id;
+	}
+	
+	private char randomChar() {
+		return alphabet().charAt(random().nextInt(alphabet().length()));
+	}
+
 	
 	public int generateId(String collection_id, String entity) throws NotFoundException {
 		try {

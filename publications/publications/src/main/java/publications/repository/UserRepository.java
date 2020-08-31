@@ -39,7 +39,7 @@ public class UserRepository {
 		user.setUser_id(id);
 		String user_xml = MarshallUser.marshall(user);
 		System.out.println(user_xml);
-		Document document = domParser.buildDocument(user_xml, "src/main/resources/data/xsd/user.xsd");
+		Document document = domParser.buildDocument(user_xml, XSD_PATH_PREFIX + "/user.xsd");
 		dbManagement.save(USER_COLLECTION_ID, user.getUser_id(), user_xml);
 		return user;
 	}

@@ -88,13 +88,13 @@ public class UserService implements UserDetailsService{
 	
 	public User addRole(String userId, Role role) throws Exception {
 		User found = findById(userId);
-		found.getRoles().add(role);
+		found.getRole().add(role);
 		return updateSave(found);
 	}
 	
 	public User removeRole(String userId, Role role) throws Exception {
 		User found = findById(userId);
-		found.getRoles().remove(role);
+		found.getRole().remove(role);
 		return updateSave(found);
 	}
 	
