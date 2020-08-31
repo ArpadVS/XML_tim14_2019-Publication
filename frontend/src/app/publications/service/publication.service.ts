@@ -17,7 +17,8 @@ export class PublicationService extends BaseService{
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/xml',
-      'Response-Type': 'application/json'
+      'Response-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
     })
   };
   

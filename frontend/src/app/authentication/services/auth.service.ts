@@ -35,6 +35,7 @@ export class AuthService extends BaseService {
       ).subscribe((user: User) => {
         this.activeUser = user;
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', this.activeUser.token);
         this.autoLogOut();
         this.router.navigateByUrl('publications/all');
       });
@@ -52,6 +53,7 @@ export class AuthService extends BaseService {
       .subscribe(() => {
         this.activeUser = null;
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
         this.router.navigateByUrl('/');
       });
   }
@@ -62,6 +64,7 @@ export class AuthService extends BaseService {
       () => {
         this.activeUser = null;
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
         this.router.navigateByUrl('/');
       }, (jwt.exp * 1000) - (new Date()).getTime()
     );
@@ -79,6 +82,7 @@ export class AuthService extends BaseService {
     if (exp < 0){
       this.activeUser = null;
       localStorage.removeItem('user');
+      localStorage.removeItem('token');
     }
 
     return this.activeUser != null;
