@@ -27,24 +27,27 @@ public class ScientificPaperController {
 	
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<?> geAll() throws Exception{
+		// TODO implementirati
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	
 	@GetMapping(value = "/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
 	public ResponseEntity<?> getScientificPaperHTML(@PathVariable(value = "id") String id) throws Exception{
+		// TODO nedostaje xslt fajl
 		return new ResponseEntity<>(scientificPaperService.getByHTML(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> getScientificPaperPDF(@PathVariable(value = "id") String id) throws Exception{
+		// TODO nedostaje xsl_fo fajl
 		return new ResponseEntity<>(scientificPaperService.getByPDF(id).toByteArray(), HttpStatus.OK);
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> create(@RequestBody String scientificPaper) throws Exception{
 		String id = scientificPaperService.save(scientificPaper);
-		String jsonRetVal = "{\"id\": \"" + id + "\"}";
+		String jsonRetVal = "{\"id\": \"" + id + "\"}"; //ako posaljem samo id, na frontu ne moze da parsira string???
 		System.out.println(jsonRetVal);
 		return new ResponseEntity<>(jsonRetVal, HttpStatus.CREATED);
 	}
