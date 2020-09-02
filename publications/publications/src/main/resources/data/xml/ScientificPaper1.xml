@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scientificPaper xmlns="https://github.com/ArpadVS/XML_tim14_2019-Publication"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/ArpadVS/XML_tim14_2019-Publication file:/C:/Users/Marieta/XML_workspace/111projekat-tim14/XML_tim14_2019-Publication/publications/publications/src/main/resources/data/xsd/ScientificPaper.xsd">
+ xsi:schemaLocation="https://github.com/ArpadVS/XML_tim14_2019-Publication file:ScientificPaper.xsd">
     <title>title0</title>
     <authors>
         <author>

@@ -39,7 +39,7 @@ public class UserRepository {
 		user.setUser_id(id);
 		String user_xml = MarshallUser.marshall(user);
 		System.out.println(user_xml);
-		Document document = domParser.buildDocument(user_xml, XSD_PATH_PREFIX + "/user.xsd");
+		Document document = domParser.buildDocument(user_xml, USER_XSD);
 		dbManagement.save(USER_COLLECTION_ID, user.getUser_id(), user_xml);
 		return user;
 	}
@@ -53,7 +53,7 @@ public class UserRepository {
 	public User findByExpression(String expression) throws NotFoundException {
 		try {
 			// String xPathExpression = String.format("//user[@user_id='%s']", id);
-			ResourceSet result = dbManagement.executeXPath(USER_COLLECTION_ID, expression);
+			ResourceSet result = dbManagement.executeXPath(USER_COLLECTION_ID, expression, TARGET_NAMESPACE_TIM14);
 
 			if (result == null) {
 				return null;

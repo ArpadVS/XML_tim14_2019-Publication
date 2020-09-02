@@ -55,10 +55,11 @@ public class ScientificPaperService {
 		return xslfoTransformer.generatePDF(scientificPaper, XSLT_FO_PATH_PREFIX + "/ScientificPaper_fo.xsl");
 	}
 	
-	public String findByText(String text) throws NotFoundException {
+	public String findByTitle(String text) throws NotFoundException {
+		String xPathExpression = String.format("//scientificPaper[title='%s']", text);
 		// TODO ispisati expression za pretragu. 
 		// Potrebno je da u nekom tekstualnom delu (naslov, podnaslov, paragraf...) sadrzi prosledjeni tekst
-		String scientificPaper = scientificPaperRepository.findByExpression("");
+		String scientificPaper = scientificPaperRepository.findByExpression(xPathExpression);
 		return scientificPaper;
 	}
 	

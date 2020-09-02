@@ -1,5 +1,9 @@
 package publications.repository;
 
+import static publications.util.constants.ApplicationConstants.*;
+
+import java.util.ArrayList;
+
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,19 +15,14 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import publications.exceptions.NotFoundException;
-import publications.model.user.User;
+import publications.model.user.DTO.ReviewDTO;
 import publications.model.user.DTO.ScientificPaperDTO;
 import publications.util.IdGenerator;
 import publications.util.db.exist_db.ExistDBManagement;
 import publications.util.dom_parser.DOMParser;
-import publications.util.marshalling.UnmarshallingUser;
-
-import static publications.util.constants.ApplicationConstants.*;
-
-import java.util.ArrayList;
 
 @Repository
-public class ScientificPaperRepository {
+public class ReviewRepository {
 
 	@Autowired
 	ExistDBManagement dbManagement;
@@ -34,38 +33,38 @@ public class ScientificPaperRepository {
 	@Autowired
 	DOMParser domParser;
 	
-	public String save(String scientificPaper) throws Exception {
+	public String save(String review) throws Exception {
 		String id = idGenerator.generateRandomID(SCIENTIFIC_PAPER_COLLECTION_ID, SCIENTIFIC_PAPER_ID_PREFIX);
-		Document document = domParser.buildDocument(scientificPaper, SCIENTIFIC_PAPER_XSD);
-		dbManagement.save(SCIENTIFIC_PAPER_COLLECTION_ID, id, scientificPaper);
+		Document document = domParser.buildDocument(review, REVIEW_XSD);
+		dbManagement.save(REVIEW_COLLECTION_ID, id, review);
 		return id;
 	}
 	
-	public String update(String scientificPaper, String id) throws Exception {
-		Document document = domParser.buildDocument(scientificPaper, SCIENTIFIC_PAPER_XSD);
-		dbManagement.save(SCIENTIFIC_PAPER_COLLECTION_ID, id, scientificPaper);
-		return scientificPaper;
+	public String update(String review, String id) throws Exception {
+		Document document = domParser.buildDocument(review, REVIEW_XSD);
+		dbManagement.save(REVIEW_COLLECTION_ID, id, review);
+		return review;
 	}
 	
 	public String findByID(String id) throws Exception {
-		XMLResource res = dbManagement.findOne(SCIENTIFIC_PAPER_COLLECTION_ID, id);
+		XMLResource res = dbManagement.findOne(REVIEW_COLLECTION_ID, id);
 		return res.getContent().toString();
 	}
 	
-	public ArrayList<ScientificPaperDTO> getAll(){
+	public ArrayList<ReviewDTO> getAll(){
 		// TODO proveriti da li radi
-		ArrayList<ScientificPaperDTO> all = new ArrayList<>();
+		ArrayList<ReviewDTO> all = new ArrayList<>();
 		
 		try {
 			
-			ResourceSet result = dbManagement.executeXPath(SCIENTIFIC_PAPER_COLLECTION_ID, "data(//scientificPaper)", TARGET_NAMESPACE_PUBLICATION);
+			ResourceSet result = dbManagement.executeXPath(REVIEW_COLLECTION_ID, "data(//review)", TARGET_NAMESPACE_PUBLICATION);
 			if (result == null) {
 				throw new Exception();
 			}
 			
 			ResourceIterator i = result.getIterator();
 			Resource res = null;
-			ScientificPaperDTO dto = new ScientificPaperDTO();
+			ReviewDTO dto = new ReviewDTO();
 			while (i.hasMoreResources()) {
 				System.out.println("******");
 				try {
@@ -96,7 +95,7 @@ public class ScientificPaperRepository {
 	}
 	public String findByExpression(String expression) throws NotFoundException {
 		try {
-			ResourceSet result = dbManagement.executeXPath(SCIENTIFIC_PAPER_COLLECTION_ID, expression, TARGET_NAMESPACE_PUBLICATION);
+			ResourceSet result = dbManagement.executeXPath(REVIEW_COLLECTION_ID, expression, TARGET_NAMESPACE_PUBLICATION);
 
 			if (result == null) {
 				return null;
@@ -104,17 +103,17 @@ public class ScientificPaperRepository {
 
 			ResourceIterator i = result.getIterator();
 			Resource res = null;
-			String scientificPaper = "";
+			String review = "";
 
 			if (!i.hasMoreResources()) {
 				System.out.println("Not found");
-				throw new NotFoundException("Could not find requested scientific paper");
+				throw new NotFoundException("Could not find requested review");
 			}
 			while (i.hasMoreResources()) {
 
 				try {
 					res = i.nextResource();
-					scientificPaper = res.getContent().toString();
+					review = res.getContent().toString();
 
 				} finally {
 					// don't forget to cleanup resources
@@ -126,10 +125,10 @@ public class ScientificPaperRepository {
 				}
 			}
 
-			return scientificPaper;
+			return review;
 
 		} catch (Exception e) {
-			throw new NotFoundException("Could not find requested scientific paper");
+			throw new NotFoundException("Could not find requested review");
 		}
 	}
 }

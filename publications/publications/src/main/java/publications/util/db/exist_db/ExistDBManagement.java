@@ -26,7 +26,7 @@ import org.xmldb.api.modules.XUpdateQueryService;
 
 import publications.util.db.exist_db.AuthenticationUtilitiesExist.ConnectionProperties;
 
-import static publications.util.constants.ApplicationConstants.TARGET_NAMESPACE;
+//import static publications.util.constants.ApplicationConstants.TARGET_NAMESPACE;
 
 @Component
 public class ExistDBManagement {
@@ -142,7 +142,7 @@ public class ExistDBManagement {
 		return res;
 	}
 
-	public ResourceSet executeXQuery(String collectionId, String xqueryExpression, String xqueryFilePath)
+	public ResourceSet executeXQuery(String collectionId, String xqueryExpression, String xqueryFilePath, String target_namespace)
 
 			throws Exception {
 
@@ -170,7 +170,7 @@ public class ExistDBManagement {
 			xqueryService.setProperty("indent", "yes");
 
 			// make the service aware of namespaces
-			xqueryService.setNamespace("b", TARGET_NAMESPACE);
+			xqueryService.setNamespace("b", target_namespace);
 
 			// read xquery if expression is not provided
 			if (xqueryExpression.isEmpty()) {
@@ -198,7 +198,7 @@ public class ExistDBManagement {
 		return result;
 	}
 	
-	public ResourceSet executeXPath(String collectionId, String xPathExpression) throws Exception {
+	public ResourceSet executeXPath(String collectionId, String xPathExpression, String target_namespace) throws Exception {
 		conn = AuthenticationUtilitiesExist.loadProperties();
 
 		ResourceSet result;
@@ -231,7 +231,7 @@ public class ExistDBManagement {
             xpathService.setProperty("indent", "yes");
             
             // make the service aware of namespaces, using the default one
-            xpathService.setNamespace("", TARGET_NAMESPACE);
+            xpathService.setNamespace("", target_namespace);
             
          // execute xpath expression 
             System.out.println("[INFO] Invoking XPath query service for: " + xPathExpression);

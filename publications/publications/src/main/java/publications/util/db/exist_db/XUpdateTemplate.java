@@ -1,15 +1,14 @@
 package publications.util.db.exist_db;
 
 import org.exist.xupdate.XUpdateProcessor;
-import static publications.util.constants.ApplicationConstants.TARGET_NAMESPACE;
+//import static publications.util.constants.ApplicationConstants.TARGET_NAMESPACE;
+
 /**
  * http://xmldb-org.sourceforge.net/xupdate/xupdate-wd.html
  * 
  */
 public class XUpdateTemplate {
 
-	
-	
 	/*
 	 * There are two instructions in XUpdate that support insertion of nodes:
 	 * xupdate:insert-before and xupdate:insert-after. Both elements have a required
@@ -20,18 +19,24 @@ public class XUpdateTemplate {
 	 * inserted.
 	 * 
 	 */
-	public static final String INSERT_AFTER = "<xu:modifications version=\"1.0\" xmlns:xu=\""
-			+ XUpdateProcessor.XUPDATE_NS + "\" xmlns=\"" + TARGET_NAMESPACE + "\">"
-			+ "<xu:insert-after select=\"%1$s\">%2$s</xu:insert-after>" + "</xu:modifications>";
+	public static String insertAfter(String target_namespace) {
+		String INSERT_AFTER = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
+				+ "\" xmlns=\"" + target_namespace + "\">" + "<xu:insert-after select=\"%1$s\">%2$s</xu:insert-after>"
+				+ "</xu:modifications>";
+		return INSERT_AFTER;
+	}
 
 	/*
 	 * The xupdate:insert-before inserts the given node as the preceding sibling of
 	 * the selected context node, where xupdate:insert-after inserts the given node
 	 * as the following sibling of the selected context node.
 	 */
-	public static final String INSERT_BEFORE = "<xu:modifications version=\"1.0\" xmlns:xu=\""
-			+ XUpdateProcessor.XUPDATE_NS + "\" xmlns=\"" + TARGET_NAMESPACE + "\">"
-			+ "<xu:insert-before select=\"%1$s\">%2$s</xu:insert-before>" + "</xu:modifications>";
+	public static String insertBefore(String target_namespace) {
+		String INSERT_BEFORE = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
+				+ "\" xmlns=\"" + target_namespace + "\">" + "<xu:insert-before select=\"%1$s\">%2$s</xu:insert-before>"
+				+ "</xu:modifications>";
+		return INSERT_BEFORE;
+	}
 
 	/*
 	 * The xupdate:append element allows a node to be created and appended as a
@@ -43,18 +48,24 @@ public class XUpdateTemplate {
 	 * attribute is omitted, the new child is appended as the last child of the
 	 * selected context node.
 	 */
-	public static final String APPEND = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
-			+ "\" xmlns=\"" + TARGET_NAMESPACE + "\">" + "<xu:append select=\"%1$s\" child=\"last()\">%2$s</xu:append>"
-			+ "</xu:modifications>";
+	public static String append(String target_namespace) {
+		String APPEND = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS + "\" xmlns=\""
+				+ target_namespace + "\">" + "<xu:append select=\"%1$s\" child=\"last()\">%2$s</xu:append>"
+				+ "</xu:modifications>";
+		return APPEND;
+	}
+
 	/*
 	 * The xupdate:update element can be used to update the content of existing
 	 * nodes. An xupdate:update element must have a select attribute, which selects
 	 * the context node for update. This select expression must evaluate to a
 	 * node-set.
 	 */
-	public static final String UPDATE = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
-			+ "\" xmlns=\"" + TARGET_NAMESPACE + "\">" + "<xu:update select=\"%1$s\">%2$s</xu:update>"
-			+ "</xu:modifications>";
+	public static String update(String target_namespace) {
+		String UPDATE = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS + "\" xmlns=\""
+				+ target_namespace + "\">" + "<xu:update select=\"%1$s\">%2$s</xu:update>" + "</xu:modifications>";
+		return UPDATE;
+	}
 
 	/*
 	 * The xupdate:remove element allows a node to be removed from the result tree.
@@ -62,6 +73,9 @@ public class XUpdateTemplate {
 	 * the node selected by an XPath expression. The select expression must evaluate
 	 * to a node-set.
 	 */
-	public static final String REMOVE = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
-			+ "\" xmlns=\"" + TARGET_NAMESPACE + "\">" + "<xu:remove select=\"%1$s\"/>" + "</xu:modifications>";
+	public static String remove(String target_namespace) {
+		String REMOVE = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS + "\" xmlns=\""
+				+ target_namespace + "\">" + "<xu:remove select=\"%1$s\"/>" + "</xu:modifications>";
+		return REMOVE;
+	}
 }

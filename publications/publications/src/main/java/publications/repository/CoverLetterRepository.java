@@ -25,7 +25,7 @@ public class CoverLetterRepository {
 	public String save(String coverLetter) throws Exception {
 		String id = idGenerator.generateRandomID(COVER_LETTER_COLLECTION_ID, COVER_LETTER_ID_PREFIX);
 		
-		Document document = domParser.buildDocument(coverLetter, XSD_PATH_PREFIX + "/CoverLetter.xsd");
+		Document document = domParser.buildDocument(coverLetter, COVER_LETTER_XSD);
 		dbManagement.save(COVER_LETTER_COLLECTION_ID, id, coverLetter);
 		return id;
 	}

@@ -26,7 +26,6 @@ export class AddPublicationComponent implements OnInit {
   onAddScientificPaperSubmit(){
     console.log('ON ADD PAPER');
     const scientificPaper: string = this.addScientificPaperForm.get('scientific_paper').value;
-    console.log(scientificPaper);
     this.publicationService.add(scientificPaper);
   }
 

@@ -22,16 +22,17 @@ public class IdGenerator {
 
 	@Autowired
 	ExistDBManagement dbManagement;
-	
+
 	@Bean
 	public String alphabet() {
 		return "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	}
+
 	@Bean
 	public SecureRandom random() {
 		return new SecureRandom();
 	}
-	
+
 	private String randomID(int length, int spacing, char spacerChar) {
 		String str = "";
 		int spacer = 0;
@@ -46,75 +47,80 @@ public class IdGenerator {
 		}
 		return str;
 	}
-	
+
 	public String generateRandomID(String collection_id, String prefix) throws Exception {
-		//generisanje random id-a
+		// generisanje random id-a
 		String id = randomID(6, 3, '-');
-		
+
 		// provera da li postoji dokument sa tim id-em
 		// skoro nikad nece postojati ali za svaki slucaj
-		XMLResource res = dbManagement.findOne(collection_id, prefix + id);
+		XMLResource res = null;
+		try {
+			res = dbManagement.findOne(collection_id, prefix + id);
+		} catch (NullPointerException e) {
+			System.out.println("Collection not existing");
+		}
 		boolean found = false;
-		if(res != null) found = true;
-		while(found) {
+		if (res != null)
+			found = true;
+		while (found) {
 			id = randomID(6, 3, '-');
 			res = dbManagement.findOne(collection_id, prefix + id);
-			if(res != null) {
+			if (res != null) {
 				found = true;
-			}else {
+			} else {
 				found = false;
 			}
 		}
-		
+
 		return prefix + id;
 	}
-	
+
 	private char randomChar() {
 		return alphabet().charAt(random().nextInt(alphabet().length()));
 	}
 
-	
-	public int generateId(String collection_id, String entity) throws NotFoundException {
-		try {
-			//String exp = "for $u in /. return $u/user";
-			//System.out.println(exp);
-			//ResourceSet result = dbManagement.executeXQuery(USER_COLLECTION_ID, exp, "");
-			ResourceSet result = dbManagement.executeXPath(collection_id, "data(//"+entity+"/@"+entity+"_id)");
-			if (result == null) {
-				throw new Exception();
-			}
-			
-			ResourceIterator i = result.getIterator();
-			Resource res = null;
-
-			int max_id = 0;
-			while (i.hasMoreResources()) {
-				System.out.println("******");
-				try {
-					res = i.nextResource();
-					System.out.println(res.getContent().toString());
-					int current_id = Integer.parseInt(res.getContent().toString().split("-")[1]);
-					if (current_id > max_id) {
-						max_id = current_id;
-					}
-				} finally {
-					// don't forget to cleanup resources
-					try {
-						((EXistResource) res).freeResources();
-					} catch (XMLDBException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-
-			System.out.println(max_id);
-			return ++max_id;
-
-		} catch (Exception e) {
-			System.out.println("error");
-			e.printStackTrace();
-			return -1;
-			
-		}
-	}
+//	public int generateId(String collection_id, String entity) throws NotFoundException {
+//		try {
+//			// String exp = "for $u in /. return $u/user";
+//			// System.out.println(exp);
+//			// ResourceSet result = dbManagement.executeXQuery(USER_COLLECTION_ID, exp, "");
+//			ResourceSet result = dbManagement.executeXPath(collection_id, "data(//" + entity + "/@" + entity + "_id)");
+//			if (result == null) {
+//				throw new Exception();
+//			}
+//
+//			ResourceIterator i = result.getIterator();
+//			Resource res = null;
+//
+//			int max_id = 0;
+//			while (i.hasMoreResources()) {
+//				System.out.println("******");
+//				try {
+//					res = i.nextResource();
+//					System.out.println(res.getContent().toString());
+//					int current_id = Integer.parseInt(res.getContent().toString().split("-")[1]);
+//					if (current_id > max_id) {
+//						max_id = current_id;
+//					}
+//				} finally {
+//					// don't forget to cleanup resources
+//					try {
+//						((EXistResource) res).freeResources();
+//					} catch (XMLDBException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//
+//			System.out.println(max_id);
+//			return ++max_id;
+//
+//		} catch (Exception e) {
+//			System.out.println("error");
+//			e.printStackTrace();
+//			return -1;
+//
+//		}
+//	}
 }
