@@ -34,7 +34,7 @@ public class ReviewRepository {
 	DOMParser domParser;
 	
 	public String save(String review) throws Exception {
-		String id = idGenerator.generateRandomID(SCIENTIFIC_PAPER_COLLECTION_ID, SCIENTIFIC_PAPER_ID_PREFIX);
+		String id = idGenerator.generateRandomID(REVIEW_COLLECTION_ID, REVIEW_ID_PREFIX);
 		Document document = domParser.buildDocument(review, REVIEW_XSD);
 		dbManagement.save(REVIEW_COLLECTION_ID, id, review);
 		return id;

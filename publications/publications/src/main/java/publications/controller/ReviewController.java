@@ -46,7 +46,7 @@ public class ReviewController {
 	}
 	
 	@GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<byte[]> getScientificPaperPDF(@PathVariable(value = "id") String id) throws Exception{
+	public ResponseEntity<byte[]> getReviewPDF(@PathVariable(value = "id") String id) throws Exception{
 		// TODO nedostaje xsl_fo fajl
 		return new ResponseEntity<>(reviewService.getByPDF(id).toByteArray(), HttpStatus.OK);
 	}
