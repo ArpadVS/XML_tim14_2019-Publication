@@ -36,7 +36,7 @@ import publications.model.user.converters.UserConverter;
 import publications.service.UserService;
 import publications.util.TokenUtils;
 import publications.util.marshalling.MarshallUser;
-import publications.util.marshalling.UnmarshallingUser;
+import publications.util.marshalling.UnmarshallingUtil;
 
 @RestController
 @RequestMapping("/api/user")
@@ -53,6 +53,9 @@ public class UserController {
 	
 	@Autowired
 	public UserConverter userConverter;
+	
+	@Autowired
+	UnmarshallingUtil unmarshallingUtil;
 	
 	@GetMapping(value = "/marshall", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> marshall() throws MarshallingFailedException{
@@ -72,7 +75,7 @@ public class UserController {
 	
 	@GetMapping(value = "/unmarshall", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> unmarshall(){
-		return new ResponseEntity<>(UnmarshallingUser.unmarshallFromFile("./src/main/resources/data/xml/user1.xml"), HttpStatus.OK);
+		return new ResponseEntity<>(unmarshallingUtil.unmarshallFromFile("./src/main/resources/data/xml/user1.xml"), HttpStatus.OK);
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)

@@ -46,9 +46,15 @@ public class ReviewRepository {
 		return review;
 	}
 	
-	public String findByID(String id) throws Exception {
-		XMLResource res = dbManagement.findOne(REVIEW_COLLECTION_ID, id);
-		return res.getContent().toString();
+	public String findByID(String id) throws NotFoundException{
+		XMLResource res;
+		try {
+			res = dbManagement.findOne(REVIEW_COLLECTION_ID, id);
+			return res.getContent().toString();
+		} catch (Exception e) {
+			throw new NotFoundException("Could not find requested review");
+		}
+		
 	}
 	
 	public ArrayList<ReviewDTO> getAll(){

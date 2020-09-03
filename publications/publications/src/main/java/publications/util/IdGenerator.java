@@ -13,7 +13,7 @@ import org.xmldb.api.modules.XMLResource;
 import publications.exceptions.NotFoundException;
 import publications.model.user.User;
 import publications.util.db.exist_db.ExistDBManagement;
-import publications.util.marshalling.UnmarshallingUser;
+import publications.util.marshalling.UnmarshallingUtil;
 import static publications.util.constants.ApplicationConstants.*;
 import java.security.SecureRandom;
 

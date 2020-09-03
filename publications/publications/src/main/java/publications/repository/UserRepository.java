@@ -19,7 +19,7 @@ import publications.util.IdGenerator;
 import publications.util.db.exist_db.ExistDBManagement;
 import publications.util.dom_parser.DOMParser;
 import publications.util.marshalling.MarshallUser;
-import publications.util.marshalling.UnmarshallingUser;
+import publications.util.marshalling.UnmarshallingUtil;
 import static publications.util.constants.ApplicationConstants.*;
 
 @Repository
@@ -33,6 +33,9 @@ public class UserRepository {
 
 	@Autowired
 	DOMParser domParser;
+	
+	@Autowired
+	UnmarshallingUtil unmarshallingUtil;
 
 	public User save(User user) throws Exception {
 		String id = idGenerator.generateRandomID(USER_COLLECTION_ID, USER_ID_PREFIX);
@@ -71,7 +74,7 @@ public class UserRepository {
 
 				try {
 					res = i.nextResource();
-					user = UnmarshallingUser.unmarshall((res.getContent().toString()));
+					user = unmarshallingUtil.unmarshall((res.getContent().toString()));
 
 				} finally {
 					// don't forget to cleanup resources

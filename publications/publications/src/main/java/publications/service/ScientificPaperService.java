@@ -3,6 +3,7 @@ package publications.service;
 import static publications.util.constants.ApplicationConstants.*;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,12 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 
 import publications.exceptions.NotFoundException;
+import publications.model.paper.TScientificPaper;
 import publications.model.user.User;
+import publications.model.user.DTO.ScientificPaperDTO;
 import publications.repository.ScientificPaperRepository;
 import publications.util.marshalling.MarshallUser;
-import publications.util.marshalling.UnmarshallingUser;
+import publications.util.marshalling.UnmarshallingUtil;
 import publications.util.transformations.HTMLTransformer;
 import publications.util.transformations.XSLFOTransformer;
 
@@ -68,5 +71,14 @@ public class ScientificPaperService {
 		// Potrebno je pronaci naucni rad po datom autoru
 		String scientificPaper = scientificPaperRepository.findByExpression("");
 		return scientificPaper;
+	}
+	
+	public ArrayList<ScientificPaperDTO> getAll() {
+		ArrayList<ScientificPaperDTO> all = scientificPaperRepository.getAll();
+		return all;
+	}
+	
+	public TScientificPaper getOne(String id) throws NotFoundException {
+		return scientificPaperRepository.getOneObj(id);
 	}
 }

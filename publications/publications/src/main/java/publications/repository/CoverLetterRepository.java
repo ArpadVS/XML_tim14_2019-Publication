@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.w3c.dom.Document;
 import org.xmldb.api.modules.XMLResource;
 
+import publications.exceptions.NotFoundException;
 import publications.util.IdGenerator;
 import publications.util.db.exist_db.ExistDBManagement;
 import publications.util.dom_parser.DOMParser;
@@ -30,8 +31,14 @@ public class CoverLetterRepository {
 		return id;
 	}
 	
-	public String findOneByID(String id) throws Exception {
-		XMLResource res = dbManagement.findOne(COVER_LETTER_COLLECTION_ID, id);
-		return res.getContent().toString();
+	public String findOneByID(String id) throws NotFoundException{
+		XMLResource res;
+		try {
+			res = dbManagement.findOne(COVER_LETTER_COLLECTION_ID, id);
+			return res.getContent().toString();
+		} catch (Exception e) {
+			throw new NotFoundException("Could not find requested Cover letter");
+		}
+		
 	}
 }

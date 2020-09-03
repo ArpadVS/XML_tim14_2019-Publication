@@ -12,11 +12,15 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.springframework.stereotype.Component;
+
+import publications.model.paper.TScientificPaper;
 import publications.model.user.User;
 
-public class UnmarshallingUser {
+@Component
+public class UnmarshallingUtil {
 
-	public static User unmarshall(String xml) {
+	public User unmarshall(String xml) {
 		try {
 			// DefiniÅ¡e se JAXB kontekst (putanja do paketa sa JAXB bean-ovima)
 			JAXBContext context = JAXBContext.newInstance("publications.model.user");
@@ -34,7 +38,26 @@ public class UnmarshallingUser {
 		return null;
 	}
 	
-	public static User unmarshallFromFile(String filePath) {
+	public TScientificPaper unmarshallScientificPaper(String xml) {
+		try {
+			// DefiniÅ¡e se JAXB kontekst (putanja do paketa sa JAXB bean-ovima)
+			JAXBContext context = JAXBContext.newInstance("publications.model.paper");
+
+			// Unmarshaller je objekat zaduÅ¾en za konverziju iz XML-a u objektni model
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+
+			TScientificPaper scientificPaper = (TScientificPaper) unmarshaller.unmarshal(new StringReader(xml));
+
+			return scientificPaper;
+		} catch (JAXBException e) {
+			e.printStackTrace();		 
+		}
+
+		return null;
+	}
+	
+	
+	public User unmarshallFromFile(String filePath) {
 		try {
 			// DefiniÅ¡e se JAXB kontekst (putanja do paketa sa JAXB bean-ovima)
 			JAXBContext context = JAXBContext.newInstance("publications.model.user");

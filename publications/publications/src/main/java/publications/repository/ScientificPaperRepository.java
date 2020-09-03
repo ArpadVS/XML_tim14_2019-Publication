@@ -11,12 +11,14 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import publications.exceptions.NotFoundException;
+import publications.model.paper.TScientificPaper;
+import publications.model.shared.TAuthor;
 import publications.model.user.User;
 import publications.model.user.DTO.ScientificPaperDTO;
 import publications.util.IdGenerator;
 import publications.util.db.exist_db.ExistDBManagement;
 import publications.util.dom_parser.DOMParser;
-import publications.util.marshalling.UnmarshallingUser;
+import publications.util.marshalling.UnmarshallingUtil;
 
 import static publications.util.constants.ApplicationConstants.*;
 
@@ -34,6 +36,9 @@ public class ScientificPaperRepository {
 	@Autowired
 	DOMParser domParser;
 	
+	@Autowired
+	UnmarshallingUtil unmarshallingUtil;
+	
 	public String save(String scientificPaper) throws Exception {
 		String id = idGenerator.generateRandomID(SCIENTIFIC_PAPER_COLLECTION_ID, SCIENTIFIC_PAPER_ID_PREFIX);
 		Document document = domParser.buildDocument(scientificPaper, SCIENTIFIC_PAPER_XSD);
@@ -47,9 +52,15 @@ public class ScientificPaperRepository {
 		return scientificPaper;
 	}
 	
-	public String findByID(String id) throws Exception {
-		XMLResource res = dbManagement.findOne(SCIENTIFIC_PAPER_COLLECTION_ID, id);
-		return res.getContent().toString();
+	public String findByID(String id) throws NotFoundException{
+		XMLResource res;
+		try {
+			res = dbManagement.findOne(SCIENTIFIC_PAPER_COLLECTION_ID, id);
+			return res.getContent().toString();
+		} catch (Exception e) {
+			throw new NotFoundException("Could not find requested Scientific Paper");
+		}
+		
 	}
 	
 	public ArrayList<ScientificPaperDTO> getAll(){
@@ -65,14 +76,21 @@ public class ScientificPaperRepository {
 			
 			ResourceIterator i = result.getIterator();
 			Resource res = null;
+			TScientificPaper scPaper = null;
 			ScientificPaperDTO dto = new ScientificPaperDTO();
+			
 			while (i.hasMoreResources()) {
 				System.out.println("******");
 				try {
 					res = i.nextResource();
-					
-					System.out.println(res.getContent().toString());
-					// TODO svaki xml pretvoriti u dto i dodati u listu
+					scPaper = unmarshallingUtil.unmarshallScientificPaper((res.getContent().toString()));
+					// System.out.println(res.getContent().toString());
+					dto.setTitle(scPaper.getTitle());
+					dto.setId(scPaper.getId());
+					for (TAuthor author: scPaper.getAuthors().getAuthor()) {
+						dto.getAuthors().add(author.getFullName());
+					}
+					all.add(dto);
 				} finally {
 					// don't forget to cleanup resources
 					try {
@@ -131,5 +149,11 @@ public class ScientificPaperRepository {
 		} catch (Exception e) {
 			throw new NotFoundException("Could not find requested scientific paper");
 		}
+	}
+	
+	public TScientificPaper getOneObj(String id) throws NotFoundException {
+		String xml = findByID(id);
+		TScientificPaper obj = unmarshallingUtil.unmarshallScientificPaper(xml);
+		return obj;
 	}
 }
