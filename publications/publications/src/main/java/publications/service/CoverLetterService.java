@@ -1,7 +1,6 @@
 package publications.service;
 
-import static publications.util.constants.ApplicationConstants.XSLT_FO_PATH_PREFIX;
-import static publications.util.constants.ApplicationConstants.XSLT_PATH_PREFIX;
+import static publications.util.constants.ApplicationConstants.*;
 
 import java.io.ByteArrayOutputStream;
 
@@ -37,7 +36,7 @@ public class CoverLetterService {
 	public String getByHTML(String id) throws Exception {
 		String coverLetter = findOneByID(id);
 		// TODO izraditi xsl fajl
-		String res = htmlTransformer.generateHTML(coverLetter, XSLT_PATH_PREFIX+"/CoverLetter.xsl");
+		String res = htmlTransformer.generateHTML(coverLetter, COVER_LETTER_XSLT);
 		System.out.println(res);
 		return res;
 	}
@@ -45,6 +44,6 @@ public class CoverLetterService {
 	public ByteArrayOutputStream getByPDF(String id) throws Exception {
 		String coverLetter = findOneByID(id);
 		// TODO izraditi xsl fo fajl
-		return xslfoTransformer.generatePDF(coverLetter, XSLT_FO_PATH_PREFIX + "/CoverLetter_fo.xsl");
+		return xslfoTransformer.generatePDF(coverLetter, COVER_LETTER_XSLT_FO);
 	}
 }

@@ -1,7 +1,6 @@
 package publications.service;
 
-import static publications.util.constants.ApplicationConstants.XSLT_FO_PATH_PREFIX;
-import static publications.util.constants.ApplicationConstants.XSLT_PATH_PREFIX;
+import static publications.util.constants.ApplicationConstants.*;
 
 import java.io.ByteArrayOutputStream;
 
@@ -39,13 +38,13 @@ public class ReviewService {
 	
 	public String getByHTML(String id) throws Exception {
 		String review = reviewRepository.findByID(id);
-		String res = htmlTransformer.generateHTML(review, XSLT_PATH_PREFIX+"/ScientificPaper.xsl");
+		String res = htmlTransformer.generateHTML(review, REVIEW_XSLT);
 		return res;
 	}
 	
 	public ByteArrayOutputStream getByPDF(String id) throws Exception {
 		String review = reviewRepository.findByID(id);
-		return xslfoTransformer.generatePDF(review, XSLT_FO_PATH_PREFIX + "/ScientificPaper_fo.xsl");
+		return xslfoTransformer.generatePDF(review, REVIEW_XSLT_FO);
 	}
 	
 	

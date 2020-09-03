@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService{
 		String xPathExpression = String.format("//user[@user_id='%s']", id);
 		User user = userRepository.findByExpression(xPathExpression);
 		String xmlUser = MarshallUser.marshall(user);
-		String res = htmlTransformer.generateHTML(xmlUser, XSLT_PATH_PREFIX+"/user.xsl");
+		String res = htmlTransformer.generateHTML(xmlUser, USER_XSLT);
 		System.out.println(res);
 		return res;
 	}
@@ -69,7 +69,7 @@ public class UserService implements UserDetailsService{
 		String xPathExpression = String.format("//user[@user_id='%s']", id);
 		User user = userRepository.findByExpression(xPathExpression);
 		String xmlUser = MarshallUser.marshall(user);
-		return xslfoTransformer.generatePDF(xmlUser, XSLT_FO_PATH_PREFIX + "/user_fo.xsl");
+		return xslfoTransformer.generatePDF(xmlUser, USER_XSLT_FO);
 	}
 	public String delete(String userId) throws Exception {
 		userRepository.removeUser(userId);
