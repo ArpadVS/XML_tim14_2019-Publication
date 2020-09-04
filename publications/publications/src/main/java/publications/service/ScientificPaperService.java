@@ -67,11 +67,11 @@ public class ScientificPaperService {
 	}
 	
 	public ArrayList<ScientificPaperDTO> getAll() {
-		ArrayList<ScientificPaperDTO> all = scientificPaperRepository.getAll();
+		ArrayList<ScientificPaperDTO> all = scientificPaperRepository.findMultipleByExpression("/");
 		return all;
 	}
 	
-	public publications.model.paper.ScientificPaper getOne(String id) throws NotFoundException {
+	public ScientificPaperDTO getOne(String id) throws NotFoundException {
 		return scientificPaperRepository.getOneObj(id);
 	}
 }

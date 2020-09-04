@@ -19,10 +19,12 @@ import org.xmldb.api.modules.XMLResource;
 
 import publications.exceptions.NotFoundException;
 import publications.model.paper.ScientificPaper;
+import publications.model.paper.TAuthor;
 import publications.model.user.DTO.ScientificPaperDTO;
 import publications.util.IdGenerator;
 import publications.util.db.exist_db.ExistDBManagement;
 import publications.util.dom_parser.DOMParser;
+import publications.util.marshalling.MarshallPaper;
 import publications.util.marshalling.UnmarshallingUtil;
 
 @Repository
@@ -36,24 +38,27 @@ public class ScientificPaperRepository {
 
 	@Autowired
 	DOMParser domParser;
-	
+
 	@Autowired
 	UnmarshallingUtil unmarshallingUtil;
-	
+
 	public String save(String scientificPaper) throws Exception {
 		String id = idGenerator.generateRandomID(SCIENTIFIC_PAPER_COLLECTION_ID, SCIENTIFIC_PAPER_ID_PREFIX);
+		ScientificPaper scp = unmarshallingUtil.unmarshallScientificPaper(scientificPaper);
+		scp.setId(id);
+		scientificPaper = MarshallPaper.marshall(scp);
 		Document document = domParser.buildDocument(scientificPaper, SCIENTIFIC_PAPER_XSD);
 		dbManagement.save(SCIENTIFIC_PAPER_COLLECTION_ID, id, scientificPaper);
 		return id;
 	}
-	
+
 	public String update(String scientificPaper, String id) throws Exception {
 		Document document = domParser.buildDocument(scientificPaper, SCIENTIFIC_PAPER_XSD);
 		dbManagement.save(SCIENTIFIC_PAPER_COLLECTION_ID, id, scientificPaper);
 		return scientificPaper;
 	}
-	
-	public String findByID(String id) throws NotFoundException{
+
+	public String findByID(String id) throws NotFoundException {
 		XMLResource res;
 		try {
 			res = dbManagement.findOne(SCIENTIFIC_PAPER_COLLECTION_ID, id);
@@ -61,10 +66,10 @@ public class ScientificPaperRepository {
 		} catch (Exception e) {
 			throw new NotFoundException("Could not find requested Scientific Paper");
 		}
-		
+
 	}
-	
-	public ArrayList<ScientificPaperDTO> getAll(){
+
+	public ArrayList<ScientificPaperDTO> getAll1() {
 		ArrayList<ScientificPaperDTO> all = new ArrayList<>();
 		ArrayList<String> authors = new ArrayList<>();
 		authors.add("Author1");
@@ -72,33 +77,34 @@ public class ScientificPaperRepository {
 		all.add(dto);
 		return all;
 	}
-	public ArrayList<ScientificPaperDTO> getAll1(){
-		// TODO proveriti da li radi
+
+	public ArrayList<ScientificPaperDTO> getAll() {
 		ArrayList<ScientificPaperDTO> all = new ArrayList<>();
-		
+
 		try {
-			
-			ResourceSet result = dbManagement.executeXPath(SCIENTIFIC_PAPER_COLLECTION_ID, "data(//scientificPaper)", TARGET_NAMESPACE_PUBLICATION);
+
+			ResourceSet result = dbManagement.executeXPath(SCIENTIFIC_PAPER_COLLECTION_ID, "/",
+					TARGET_NAMESPACE_PUBLICATION);
 			if (result == null) {
-				throw new Exception();
+				return all;
 			}
-			
+
 			ResourceIterator i = result.getIterator();
 			Resource res = null;
 			ScientificPaper scPaper = null;
-			ScientificPaperDTO dto = new ScientificPaperDTO();
-			
+
 			while (i.hasMoreResources()) {
-				System.out.println("******");
+				// System.out.println("******");
+				ScientificPaperDTO dto = new ScientificPaperDTO();
 				try {
 					res = i.nextResource();
-					scPaper = unmarshallingUtil.unmarshallScientificPaper((res.getContent().toString()));
 					// System.out.println(res.getContent().toString());
-					//dto.setTitle(scPaper.getTitle());
+					scPaper = unmarshallingUtil.unmarshallScientificPaper((res.getContent().toString()));
 					dto.setId(scPaper.getId());
-					/*for (TAuthor author: scPaper.getAuthors().getAuthor()) {
+					dto.setTitle(scPaper.getTitle());
+					for (TAuthor author : scPaper.getAuthors().getAuthor()) {
 						dto.getAuthors().add(author.getFullName());
-					}*/
+					}
 					all.add(dto);
 				} finally {
 					// don't forget to cleanup resources
@@ -110,20 +116,68 @@ public class ScientificPaperRepository {
 				}
 			}
 
-			
-
 		} catch (Exception e) {
 			System.out.println("error");
 			e.printStackTrace();
-			return null;
-			
+			return all;
+
 		}
-		
+
 		return all;
 	}
+
+	public ArrayList<ScientificPaperDTO> findMultipleByExpression(String expression) {
+		ArrayList<ScientificPaperDTO> found = new ArrayList<>();
+		try {
+			ResourceSet result = dbManagement.executeXPath(SCIENTIFIC_PAPER_COLLECTION_ID, expression,
+					TARGET_NAMESPACE_PUBLICATION);
+
+			if (result == null) {
+				return found;
+			}
+
+			ResourceIterator i = result.getIterator();
+			Resource res = null;
+			ScientificPaper scPaper = null;
+
+			if (!i.hasMoreResources()) {
+				System.out.println("Not found");
+				throw new NotFoundException("Could not find requested scientific paper");
+			}
+			while (i.hasMoreResources()) {
+				ScientificPaperDTO dto = new ScientificPaperDTO();
+				try {
+					res = i.nextResource();
+					scPaper = unmarshallingUtil.unmarshallScientificPaper((res.getContent().toString()));
+					dto.setId(scPaper.getId());
+					dto.setTitle(scPaper.getTitle());
+					for (TAuthor author : scPaper.getAuthors().getAuthor()) {
+						dto.getAuthors().add(author.getFullName());
+					}
+					found.add(dto);
+
+				} finally {
+					// don't forget to cleanup resources
+					try {
+						((EXistResource) res).freeResources();
+					} catch (XMLDBException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			//throw new NotFoundException("Could not find requested scientific paper");
+			return found;
+		}
+
+		return found;
+	}
+
 	public String findByExpression(String expression) throws NotFoundException {
 		try {
-			ResourceSet result = dbManagement.executeXPath(SCIENTIFIC_PAPER_COLLECTION_ID, expression, TARGET_NAMESPACE_PUBLICATION);
+			ResourceSet result = dbManagement.executeXPath(SCIENTIFIC_PAPER_COLLECTION_ID, expression,
+					TARGET_NAMESPACE_PUBLICATION);
 
 			if (result == null) {
 				return null;
@@ -159,10 +213,16 @@ public class ScientificPaperRepository {
 			throw new NotFoundException("Could not find requested scientific paper");
 		}
 	}
-	
-	public ScientificPaper getOneObj(String id) throws NotFoundException {
+
+	public ScientificPaperDTO getOneObj(String id) throws NotFoundException {
 		String xml = findByID(id);
-		ScientificPaper obj = unmarshallingUtil.unmarshallScientificPaper(xml);
-		return obj;
+		ScientificPaper scPaper = unmarshallingUtil.unmarshallScientificPaper(xml);
+		ScientificPaperDTO dto = new ScientificPaperDTO();
+		dto.setTitle(scPaper.getTitle());
+		dto.setId(scPaper.getId());
+		for (TAuthor author : scPaper.getAuthors().getAuthor()) {
+			dto.getAuthors().add(author.getFullName());
+		}
+		return dto;
 	}
 }

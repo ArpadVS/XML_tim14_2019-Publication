@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PublicationService } from '../service/publication.service';
 import { Router } from '@angular/router';
+import { PaperLetter } from 'src/app/models/paper.letter.model';
 
 @Component({
   selector: 'app-add-publication',
@@ -28,7 +29,8 @@ export class AddPublicationComponent implements OnInit {
     console.log('ON ADD PAPER');
     const scientificPaper: string = this.addScientificPaperForm.get('scientific_paper').value;
     const coverLetter: string = this.addScientificPaperForm.get('cover_letter').value;
-    this.publicationService.add(scientificPaper);
+    const paperLetter: PaperLetter = new PaperLetter(scientificPaper, coverLetter);
+    this.publicationService.add(paperLetter);
   }
 
 }
