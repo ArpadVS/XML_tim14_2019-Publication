@@ -1,12 +1,11 @@
 package publications.util.marshalling;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
-import java.io.StringReader;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -14,7 +13,9 @@ import javax.xml.bind.Unmarshaller;
 
 import org.springframework.stereotype.Component;
 
-import publications.model.paper.TScientificPaper;
+import publications.model.letter.CoverLetter;
+import publications.model.paper.ScientificPaper;
+import publications.model.review.Review;
 import publications.model.user.User;
 
 @Component
@@ -38,7 +39,7 @@ public class UnmarshallingUtil {
 		return null;
 	}
 	
-	public TScientificPaper unmarshallScientificPaper(String xml) {
+	public ScientificPaper unmarshallScientificPaper(String xml) {
 		try {
 			// DefiniÅ¡e se JAXB kontekst (putanja do paketa sa JAXB bean-ovima)
 			JAXBContext context = JAXBContext.newInstance("publications.model.paper");
@@ -46,9 +47,45 @@ public class UnmarshallingUtil {
 			// Unmarshaller je objekat zaduÅ¾en za konverziju iz XML-a u objektni model
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 
-			TScientificPaper scientificPaper = (TScientificPaper) unmarshaller.unmarshal(new StringReader(xml));
+			ScientificPaper scientificPaper = (ScientificPaper) unmarshaller.unmarshal(new StringReader(xml));
 
 			return scientificPaper;
+		} catch (JAXBException e) {
+			e.printStackTrace();		 
+		}
+
+		return null;
+	}
+	
+	public CoverLetter unmarshallCoverLetter(String xml){
+		try {
+			// DefiniÅ¡e se JAXB kontekst (putanja do paketa sa JAXB bean-ovima)
+			JAXBContext context = JAXBContext.newInstance("publications.model.letter");
+
+			// Unmarshaller je objekat zaduÅ¾en za konverziju iz XML-a u objektni model
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+
+			CoverLetter letter = (CoverLetter) unmarshaller.unmarshal(new StringReader(xml));
+
+			return letter;
+		} catch (JAXBException e) {
+			e.printStackTrace();		 
+		}
+
+		return null;
+	}
+	
+	public Review unmarshallReview(String xml){
+		try {
+			// DefiniÅ¡e se JAXB kontekst (putanja do paketa sa JAXB bean-ovima)
+			JAXBContext context = JAXBContext.newInstance("publications.model.review");
+
+			// Unmarshaller je objekat zaduÅ¾en za konverziju iz XML-a u objektni model
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+
+			Review rev = (Review) unmarshaller.unmarshal(new StringReader(xml));
+
+			return rev;
 		} catch (JAXBException e) {
 			e.printStackTrace();		 
 		}

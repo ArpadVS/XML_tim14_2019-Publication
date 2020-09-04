@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Cover_letter xmlns="https://github.com/ArpadVS/XML_tim14_2019-Publication"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/ArpadVS/XML_tim14_2019-Publication file:CoverLetter.xsd">
+ xsi:schemaLocation="https://github.com/ArpadVS/XML_tim14_2019-Publication ../xsd/CoverLetter.xsd">
     <sender_contact>
         <Name>Name0</Name>
         <Phone_number>000-000-0000</Phone_number>
-        <Location>
-        </Location>
+        <Location>Location0</Location>
         <Email>a@a.aa</Email>
     </sender_contact>
     <employer_contact>
@@ -17,10 +16,8 @@
         <Email>a@a.aa</Email>
     </employer_contact>
     <body>
-        <Paragraphs>
-            <Paragraph><bold>This is so sad</bold> Sad is it WOW</Paragraph>
-            <Paragraph/>
-        </Paragraphs>
+        <Paragraphs>Paragraphs0</Paragraphs>
+        <Paragraphs>Paragraphs1</Paragraphs>
         <Thanksgiving>Thanksgiving0</Thanksgiving>
         <Closure>
             <Compliment>Compliment0</Compliment>

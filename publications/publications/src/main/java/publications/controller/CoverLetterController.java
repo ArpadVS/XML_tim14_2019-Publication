@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import publications.exceptions.NotFoundException;
+import publications.model.letter.CoverLetter;
+import publications.model.paper.ScientificPaper;
 import publications.model.user.User;
 import publications.service.CoverLetterService;
 
@@ -26,6 +28,11 @@ public class CoverLetterController {
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> getCoverLetterById(@PathVariable(value = "id") String id) throws Exception{
 		return new ResponseEntity<>(coverLetterService.findOneByID(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/obj/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<CoverLetter> getObjById(@PathVariable(value = "id") String id) throws Exception{
+		return new ResponseEntity<>(coverLetterService.getOne(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/html/{id}", produces = MediaType.TEXT_HTML_VALUE)

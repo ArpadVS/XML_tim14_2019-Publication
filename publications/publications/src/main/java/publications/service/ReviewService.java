@@ -1,6 +1,7 @@
 package publications.service;
 
-import static publications.util.constants.ApplicationConstants.*;
+import static publications.util.constants.ApplicationConstants.REVIEW_XSLT;
+import static publications.util.constants.ApplicationConstants.REVIEW_XSLT_FO;
 
 import java.io.ByteArrayOutputStream;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import publications.exceptions.NotFoundException;
+import publications.model.review.Review;
 import publications.repository.ReviewRepository;
 import publications.util.transformations.HTMLTransformer;
 import publications.util.transformations.XSLFOTransformer;
@@ -45,6 +47,10 @@ public class ReviewService {
 	public ByteArrayOutputStream getByPDF(String id) throws Exception {
 		String review = reviewRepository.findByID(id);
 		return xslfoTransformer.generatePDF(review, REVIEW_XSLT_FO);
+	}
+
+	public Review getOne(String id) throws NotFoundException {
+		return reviewRepository.getOneObj(id);
 	}
 	
 	

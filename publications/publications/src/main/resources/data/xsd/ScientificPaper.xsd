@@ -2,55 +2,54 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="https://github.com/ArpadVS/XML_tim14_2019-Publication"
     xmlns="https://github.com/ArpadVS/XML_tim14_2019-Publication">
-
-    <xs:include schemaLocation="Shared.xsd"/>
-    <xs:complexType name="TScientificPaper">
-        <xs:sequence>
-            <xs:element name="title" type="xs:string"/>
-            <xs:element name="authors">
-                <xs:complexType>
-                    <xs:sequence maxOccurs="unbounded">
-                        <xs:element name="author" type="TAuthor"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="abstract">
-                <xs:complexType>
-                    <xs:sequence maxOccurs="unbounded">
-                        <xs:element name="paragraph">
-                            <xs:simpleType>
-                                <xs:restriction base="xs:string">
-                                    <xs:minLength value="2"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element ref="keywords"/>
-            <xs:element name="content">
-                <xs:complexType>
-                    <xs:sequence maxOccurs="unbounded">
-                        <xs:element ref="chapter"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="references">
-                <xs:complexType>
-                    <xs:sequence maxOccurs="unbounded" minOccurs="1">
-                        <xs:element ref="reference"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-        <xs:attribute name="recieved" type="xs:date"/>
-        <xs:attribute name="revised" type="xs:date"/>
-        <xs:attribute name="accepted" type="xs:date"/>
-        <xs:attribute name="id" type="xs:anyURI" use="optional"/>
-        <xs:attribute name="language" type="xs:string"/>
-        <xs:attribute name="status" type="TPaperStatus"/>
-    </xs:complexType>
-    <xs:element name="scientificPaper" type="TScientificPaper"/>
+    <xs:element name="scientificPaper">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="title" type="xs:string"/>
+                <xs:element name="authors">
+                    <xs:complexType>
+                        <xs:sequence maxOccurs="unbounded">
+                            <xs:element name="author" type="TAuthor"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="abstract">
+                    <xs:complexType>
+                        <xs:sequence maxOccurs="unbounded">
+                            <xs:element name="paragraph">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="2"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="keywords" type="TKeywords"/>
+                <xs:element name="content">
+                    <xs:complexType>
+                        <xs:sequence maxOccurs="unbounded">
+                            <xs:element name="chapter" type="TChapter"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="references">
+                    <xs:complexType>
+                        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+                            <xs:element name="reference" type="TReference"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="recieved" type="xs:date"/>
+            <xs:attribute name="revised" type="xs:date"/>
+            <xs:attribute name="accepted" type="xs:date"/>
+            <xs:attribute name="id" type="xs:anyURI" use="optional"/>
+            <xs:attribute name="language" type="xs:string"/>
+            <xs:attribute name="status" type="TPaperStatus"/>
+        </xs:complexType>
+    </xs:element>
     <xs:simpleType name="TPaperStatus">
         <xs:restriction base="xs:string">
             <xs:enumeration value="toBeReviewed"/>
@@ -62,93 +61,170 @@
             <xs:enumeration value="revisionDone"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:element name="keywords">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element maxOccurs="unbounded" name="keyword" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="chapter">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="title">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:minLength value="3"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:choice maxOccurs="unbounded" minOccurs="1">
-                    <xs:element name="paragraph" type="TParagraph"/>
-                    <xs:element name="picture">
-                        <xs:complexType>
-                            <xs:sequence>
-                                <xs:element name="description" type="xs:string"/>
-                                <xs:element name="image" type="xs:base64Binary"/>
-                            </xs:sequence>
+    <xs:complexType mixed="true" name="TParagraphs">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="Paragraph" type="TParagraph"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType mixed="true" name="TParagraph">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="list">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="1" name="item"
+                            type="TParagraph"/>
+                    </xs:sequence>
+                    <xs:attribute name="id" type="xs:anyURI"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="quote">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="TDecorator">
                             <xs:attribute name="id" type="xs:anyURI"/>
-                        </xs:complexType>
-                    </xs:element>
-                    <xs:element name="table">
-                        <xs:complexType>
-                            <xs:sequence>
-                                <xs:element name="description"/>
-                                <xs:element maxOccurs="unbounded" name="row">
-                                    <xs:complexType>
-                                        <xs:sequence maxOccurs="unbounded">
-                                            <xs:element name="column"/>
-                                        </xs:sequence>
-                                    </xs:complexType>
-                                </xs:element>
-                            </xs:sequence>
-                            <xs:attribute name="id" type="xs:anyURI"/>
-                        </xs:complexType>
-                    </xs:element>
-                    <xs:element name="figure">
-                        <xs:complexType>
-                            <xs:sequence>
-                                <xs:element name="title" type="xs:string"/>
-                                <xs:element name="image" type="xs:base64Binary"/>
-                            </xs:sequence>
-                            <xs:attribute name="id" type="xs:anyURI"/>
-                        </xs:complexType>
-                    </xs:element>
-                </xs:choice>
-            </xs:sequence>
-            <xs:attribute name="id" type="xs:anyURI"/>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="reference">
-        <xs:complexType>
-            <xs:sequence maxOccurs="unbounded">
-                <xs:element ref="refAuthors"/>
-                <xs:element name="year" type="xs:int"/>
-                <xs:element name="title">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:minLength value="1"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="publisher">
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ref">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:anyURI"> </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="internal-ref">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:anyURI"> </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="bold" type="TDecorator"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="italic" type="TDecorator"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="underline" type="TDecorator"/>
+            </xs:choice>
+            <xs:element name="formule">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string"> </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TAuthor">
+        <xs:sequence>
+            <xs:element name="fullName">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="institution">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string"/>
+                        <xs:element name="location" type="TLocation"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="email" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType mixed="true" name="TDecorator">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="bold" type="TDecorator"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="italic" type="TDecorator"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="underline" type="TDecorator"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TKeywords">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="keyword" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TReference">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:element name="refAuthors" type="TRefAuthors"/>
+            <xs:element name="year" type="xs:int"/>
+            <xs:element name="title">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="publisher">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="institution" type="xs:string"/>
+                        <xs:element name="city" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="webUrl" type="xs:anyURI"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:anyURI"/>
+    </xs:complexType>
+    <xs:complexType name="TRefAuthors">
+        <xs:sequence maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="refAuthor" type="TAuthor"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TChapter">
+        <xs:sequence>
+            <xs:element name="title">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:choice maxOccurs="unbounded" minOccurs="1">
+                <xs:element name="paragraph" type="TParagraph"/>
+                <xs:element name="picture">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="institution" type="xs:string"/>
-                            <xs:element name="city" type="xs:string"/>
+                            <xs:element name="description" type="xs:string"/>
+                            <xs:element name="image" type="xs:base64Binary"/>
                         </xs:sequence>
+                        <xs:attribute name="id" type="xs:anyURI"/>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="webUrl" type="xs:anyURI"/>
-            </xs:sequence>
-            <xs:attribute name="id" type="xs:anyURI"/>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="refAuthors">
-        <xs:complexType>
-            <xs:sequence maxOccurs="unbounded" minOccurs="0">
-                <xs:element name="refAuthor" type="TAuthor"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+                <xs:element name="table">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="description"/>
+                            <xs:element maxOccurs="unbounded" name="row">
+                                <xs:complexType>
+                                    <xs:sequence maxOccurs="unbounded">
+                                        <xs:element name="column"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:anyURI"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="figure">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="title" type="xs:string"/>
+                            <xs:element name="image" type="xs:base64Binary"/>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:anyURI"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:anyURI"/>
+    </xs:complexType>
+    <xs:complexType name="TLocation">
+        <xs:sequence>
+            <xs:element name="City" type="xs:string"/>
+            <xs:element name="State" type="xs:string"/>
+            <xs:element name="Country" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>

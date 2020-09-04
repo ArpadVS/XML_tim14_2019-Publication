@@ -2,7 +2,6 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="https://github.com/ArpadVS/XML_tim14_2019-Publication"
     xmlns="https://github.com/ArpadVS/XML_tim14_2019-Publication">
-    <xs:include schemaLocation="Shared.xsd"/>
     <xs:element name="review">
         <xs:complexType>
             <xs:all>
@@ -14,7 +13,7 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="reviewer" type="TAuthor"/>
+                <xs:element name="reviewer" type="TReviewer"/>
                 <xs:element name="comments">
                     <xs:complexType>
                         <xs:sequence maxOccurs="unbounded" minOccurs="0">
@@ -48,6 +47,33 @@
         <xs:sequence>
             <xs:element name="element-id" type="xs:anyURI"/>
             <xs:element name="comment" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TReviewer">
+        <xs:sequence>
+            <xs:element name="fullName">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="institution">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string"/>
+                        <xs:element name="location" type="TAddress"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="email" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TAddress">
+        <xs:sequence>
+            <xs:element name="City" type="xs:string"/>
+            <xs:element name="State" type="xs:string"/>
+            <xs:element name="Country" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
