@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<review xmlns="https://github.com/ArpadVS/XML_tim14_2019-Publication"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/ArpadVS/XML_tim14_2019-Publication ../xsd/review.xsd">
+<review xmlns="https://github.com/ArpadVS/XML_tim14_2019-Publication">
     <paper-id>scientificPaper-V0R-042</paper-id>
     <paperTitle>This is paper 1</paperTitle>
     <reviewer>
@@ -16,7 +13,21 @@
         </institution>
         <email>email0</email>
     </reviewer>
-    <comments/>
+    <comments>
+        <comment>
+            <element-id> 1</element-id>
+            <comment> good</comment>
+        </comment>
+        <comment>
+            <element-id> 2</element-id>
+            <comment>  very good</comment>
+        </comment>
+        <comment>
+            <element-id> 3</element-id>
+            <comment> the best </comment>
+        </comment>
+        
+    </comments>
     <summary>summary0</summary>
     <grade>6</grade>
 </review>
