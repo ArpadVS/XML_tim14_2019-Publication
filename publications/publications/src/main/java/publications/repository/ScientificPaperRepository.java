@@ -64,6 +64,14 @@ public class ScientificPaperRepository {
 	}
 	
 	public ArrayList<ScientificPaperDTO> getAll(){
+		ArrayList<ScientificPaperDTO> all = new ArrayList<>();
+		ArrayList<String> authors = new ArrayList<>();
+		authors.add("Author1");
+		ScientificPaperDTO dto = new ScientificPaperDTO("scientificPaper-6WB-ZG0", "titleeeaa", authors);
+		all.add(dto);
+		return all;
+	}
+	public ArrayList<ScientificPaperDTO> getAll1(){
 		// TODO proveriti da li radi
 		ArrayList<ScientificPaperDTO> all = new ArrayList<>();
 		

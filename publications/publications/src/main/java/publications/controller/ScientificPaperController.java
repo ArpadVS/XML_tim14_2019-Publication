@@ -38,7 +38,7 @@ public class ScientificPaperController {
 		return new ResponseEntity<>(scientificPaperService.findByTitle(title), HttpStatus.OK);
 	}
 	
-	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> geAll() throws Exception{
 		return new ResponseEntity<>(scientificPaperService.getAll(), HttpStatus.OK);
 	}

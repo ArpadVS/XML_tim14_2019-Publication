@@ -1,0 +1,18 @@
+<div id="form-title" class="list-header-title">Register</div>
+
+    <form [formGroup]="addReviewForm" (ngSubmit)="onAddReviewSubmit()" novalidate>
+      <div class="form-container form-group">  
+        <mat-form-field>
+            <textarea id="review"
+                   matInput
+                   formControlName="review"
+                   placeholder="Enter your review" ></textarea>
+          </mat-form-field>
+
+        
+          <button mat-button type="submit" 
+                  id="submit"
+                  class="mat-raised-button mat-primary" 
+                  [disabled]="!addReviewForm.valid">Submit</button>
+      </div>
+    </form>

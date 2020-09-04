@@ -26,6 +26,13 @@ export class AllPublicationsComponent implements OnInit {
 
   _getData(){
     console.log('getting data');
+    this.publicationService.getAll().subscribe((res: Publication[]) => {
+      if (res != null) {
+        this.publications = res;
+        console.log(res);
+        this.initializeDataSource();
+      }
+    });
   }
 
   initializeDataSource() {
@@ -34,7 +41,7 @@ export class AllPublicationsComponent implements OnInit {
   }
 
   getDisplayedColumns(){
-    return ['Index', 'Author', 'Title', 'Delete'];
+    return ['Index', 'Author', 'Title', 'HTML', 'PDF'];
   }
 
   redirectToAddNewPage() {
@@ -42,6 +49,14 @@ export class AllPublicationsComponent implements OnInit {
   }
 
   delete(publicationId){
-    console.log('deleting')
+    console.log('deleting');
+  }
+
+  getHTML(id: string){
+    this.publicationService.getHTML(id);
+  }
+
+  getPDF(id: string){
+    this.publicationService.getPDF(id);
   }
 }

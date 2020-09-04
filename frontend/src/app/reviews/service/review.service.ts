@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { BaseService } from 'src/app/shared/services/base.service';
 import { Observable } from 'rxjs';
 
 const ENDPOINTS = {
-  SCIENTIFIC_PAPER: '/scientificPaper',
-  USER: '/user'
-}
-
+  REVIEW: '/review'
+};
 
 @Injectable({
   providedIn: 'root'
 })
-export class PublicationService extends BaseService{
+
+export class ReviewService  extends BaseService{
+
   activeUser: User;
   httpOptions = {
     headers: new HttpHeaders({
@@ -23,30 +23,30 @@ export class PublicationService extends BaseService{
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     })
   };
-  
-  constructor(private http: HttpClient, private router: Router) {
+
+  constructor(private http: HttpClient, private router: Router) { 
     super();
     this.activeUser = JSON.parse( localStorage.getItem('user'));
   }
 
-  add(scientificPaper: string): void{
-    this.http.post(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}`, scientificPaper, this.httpOptions)
+  add(review: string): void{
+    this.http.post(`${this.baseUrl}${ENDPOINTS.REVIEW}`, review, this.httpOptions)
       .subscribe(result => {
         // console.log(result);
-        console.log('dodat rad')
+        console.log('dodat review')
         this.router.navigateByUrl('publications/all');
       });
   }
 
   getHTML(id: string){
-    window.open(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}` + '/html/' + id);
+    window.open(`${this.baseUrl}${ENDPOINTS.REVIEW}` + '/html/' + id);
   }
 
   getPDF(id: string){
-    window.open(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}` + '/pdf/' + id);
+    window.open(`${this.baseUrl}${ENDPOINTS.REVIEW}` + '/pdf/' + id);
   }
 
   getAll(): Observable<any>{
-    return this.http.get(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}`);
+    return this.http.get(`${this.baseUrl}${ENDPOINTS.REVIEW}`);
   }
 }

@@ -19,13 +19,15 @@ export class AddPublicationComponent implements OnInit {
 
   ngOnInit(): void {
     this.addScientificPaperForm = this.formBuilder.group({
-      scientific_paper: ['', [Validators.required]]
+      scientific_paper: ['', [Validators.required]],
+      cover_letter: ['', [Validators.required]]
     });
   }
 
   onAddScientificPaperSubmit(){
     console.log('ON ADD PAPER');
     const scientificPaper: string = this.addScientificPaperForm.get('scientific_paper').value;
+    const coverLetter: string = this.addScientificPaperForm.get('cover_letter').value;
     this.publicationService.add(scientificPaper);
   }
 

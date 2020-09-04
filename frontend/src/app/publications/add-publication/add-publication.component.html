@@ -1,19 +1,26 @@
-<p>add-publication worksss!</p>
-<div id="form-title" class="list-header-title">Register</div>
 
     <form [formGroup]="addScientificPaperForm" (ngSubmit)="onAddScientificPaperSubmit()" novalidate>
-      <div class="form-container form-group">  
-        <mat-form-field>
-            <textarea id="scientific_paper"
+      <div>
+        <mat-form-field style="width: 600px;" appearance="outline">
+            <textarea matInput rows="10"
+            cdkAutosizeMinRows="10"  id="scientific_paper"
                    matInput
                    formControlName="scientific_paper"
                    placeholder="Enter your scientific paper" ></textarea>
           </mat-form-field>
-
-        
+      &nbsp;&nbsp;&nbsp;
+          <mat-form-field style="width: 600px;" appearance="outline"> 
+            <textarea id="cover_letter"
+                   matInput rows="10"
+                   formControlName="cover_letter"
+                   placeholder="Enter your cover letter" ></textarea>
+          </mat-form-field>
+      </div>
+      <br/>
           <button mat-button type="submit" 
                   id="submit"
                   class="mat-raised-button mat-primary" 
                   [disabled]="!addScientificPaperForm.valid">Submit</button>
-      </div>
+                
+ 
     </form>

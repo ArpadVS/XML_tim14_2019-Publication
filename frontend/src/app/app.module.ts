@@ -16,12 +16,14 @@ import { MainModule } from './main/main.module';
 import { HttpInterceptorService } from './shared/services/http-interceptor.service';
 import { AllPublicationsComponent } from './publications/all-publications/all-publications.component';
 import { AddPublicationComponent } from './publications/add-publication/add-publication.component';
+import { AddReviewComponent } from './reviews/add-review/add-review.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AllPublicationsComponent,
     AddPublicationComponent,
+    AddReviewComponent,
   ],
   imports: [
     BrowserModule,
