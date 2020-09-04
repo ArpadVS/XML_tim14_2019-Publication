@@ -37,10 +37,10 @@ public class ApplicationConstants {
 	 * XSLT_FO paths
 	 */
 	public static final String XSLT_FO_PATH_PREFIX = DATA_PATH + "/xslt_fo";
-	public static final String USER_XSLT_FO = XSLT_FO_PATH_PREFIX + "/user.xsl";
-	public static final String COVER_LETTER_XSLT_FO = XSLT_FO_PATH_PREFIX + "/CoverLetter.xsl";
-	public static final String SCIENTIFIC_PAPER_XSLT_FO = XSLT_FO_PATH_PREFIX + "/ScientificPaper.xsl";
-	public static final String REVIEW_XSLT_FO = XSLT_FO_PATH_PREFIX + "/review.xsl";
+	public static final String USER_XSLT_FO = XSLT_FO_PATH_PREFIX + "/user_fo.xsl";
+	public static final String COVER_LETTER_XSLT_FO = XSLT_FO_PATH_PREFIX + "/CoverLetter_fo.xsl";
+	public static final String SCIENTIFIC_PAPER_XSLT_FO = XSLT_FO_PATH_PREFIX + "/ScientificPaper_fo.xsl";
+	public static final String REVIEW_XSLT_FO = XSLT_FO_PATH_PREFIX + "/review_fo.xsl";
 	
 	/*
 	 * XSD paths
