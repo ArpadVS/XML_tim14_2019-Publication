@@ -74,4 +74,6 @@ public class ScientificPaperService {
 	public ScientificPaperDTO getOne(String id) throws NotFoundException {
 		return scientificPaperRepository.getOneObj(id);
 	}
+	
+	
 }

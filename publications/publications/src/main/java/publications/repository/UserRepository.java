@@ -14,7 +14,10 @@ import org.xmldb.api.base.XMLDBException;
 
 import publications.exceptions.MarshallingFailedException;
 import publications.exceptions.NotFoundException;
+import publications.model.paper.ScientificPaper;
+import publications.model.paper.TAuthor;
 import publications.model.user.User;
+import publications.model.user.DTO.ScientificPaperDTO;
 import publications.util.IdGenerator;
 import publications.util.db.exist_db.ExistDBManagement;
 import publications.util.dom_parser.DOMParser;
@@ -93,6 +96,50 @@ public class UserRepository {
 		}
 	}
 
+	public ArrayList<User> findMultipleByExpression(String expression){
+		ArrayList<User> found = new ArrayList<User>();
+		try {
+			ResourceSet result = dbManagement.executeXPath(USER_COLLECTION_ID, expression,
+					TARGET_NAMESPACE_TIM14);
+
+			if (result == null) {
+				return found;
+			}
+
+			ResourceIterator i = result.getIterator();
+			Resource res = null;
+			User user = null;
+
+			if (!i.hasMoreResources()) {
+				System.out.println("Not found");
+				throw new NotFoundException("Could not find requested scientific paper");
+			}
+			while (i.hasMoreResources()) {
+				ScientificPaperDTO dto = new ScientificPaperDTO();
+				try {
+					res = i.nextResource();
+					user = unmarshallingUtil.unmarshall((res.getContent().toString()));
+					
+					found.add(user);
+
+				} finally {
+					// don't forget to cleanup resources
+					try {
+						((EXistResource) res).freeResources();
+					} catch (XMLDBException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			//throw new NotFoundException("Could not find requested scientific paper");
+			return found;
+		}
+
+		return found;
+	
+	}
 	
 	public void removeUser(String userId) throws Exception {
 		long flag = dbManagement.delete(USER_COLLECTION_ID, userId);

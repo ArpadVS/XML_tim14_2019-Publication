@@ -2,6 +2,7 @@ package publications.service;
 
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import publications.exceptions.MarshallingFailedException;
 import publications.exceptions.NotFoundException;
 import publications.model.user.Role;
 import publications.model.user.User;
+import publications.model.user.DTO.ScientificPaperDTO;
 import publications.repository.UserRepository;
 import publications.util.dom_parser.DOMParser;
 import publications.util.marshalling.MarshallUser;
@@ -124,4 +126,17 @@ public class UserService implements UserDetailsService{
 		}
 		return userDetails;
 	}
+	
+	public ArrayList<User> getAll() {
+		ArrayList<User> all = userRepository.findMultipleByExpression("/");
+		return all;
+	}
+	
+	public ArrayList<User> getAllReviewers() {
+		String xPathExpression = String.format("//user[role='%s']", "ROLE_REVIEWER");
+		ArrayList<User> all = userRepository.findMultipleByExpression(xPathExpression);
+		return all;
+	}
+	
+	
 }
