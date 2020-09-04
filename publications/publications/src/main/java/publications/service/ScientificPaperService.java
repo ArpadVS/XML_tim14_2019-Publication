@@ -71,6 +71,13 @@ public class ScientificPaperService {
 		return all;
 	}
 	
+	public ArrayList<ScientificPaperDTO> getAllByStatus(String status) {
+		String xPathExpression = String.format("//scientificPaper[@status='%s']", status);
+		ArrayList<ScientificPaperDTO> all = scientificPaperRepository.findMultipleByExpression(xPathExpression);
+		return all;
+	}
+	
+	
 	public ScientificPaperDTO getOne(String id) throws NotFoundException {
 		return scientificPaperRepository.getOneObj(id);
 	}

@@ -31,7 +31,7 @@ public class ScientificPaperController {
 	@Autowired
 	CoverLetterService coverLetterService;
 	
-	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+	@GetMapping(value = "/id/{id}", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> getById(@PathVariable(value = "id") String id) throws Exception{
 		return new ResponseEntity<>(scientificPaperService.findByID(id), HttpStatus.OK);
 	}
@@ -51,6 +51,11 @@ public class ScientificPaperController {
 		return new ResponseEntity<>(scientificPaperService.getAll(), HttpStatus.OK);
 	}
 	
+	@GetMapping(value="/status/{status}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> geAllByStatus(@PathVariable(value = "status") String status) throws Exception{
+		return new ResponseEntity<>(scientificPaperService.getAllByStatus(status), HttpStatus.OK);
+	}
+
 	
 	@GetMapping(value = "/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
 	public ResponseEntity<?> getScientificPaperHTML(@PathVariable(value = "id") String id) throws Exception{
