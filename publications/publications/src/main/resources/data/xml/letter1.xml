@@ -5,8 +5,7 @@
     <sender_contact>
         <Name>Name0</Name>
         <Phone_number>000-000-0000</Phone_number>
-        <Location>
-        </Location>
+        <Location>Location0</Location>
         <Email>a@a.aa</Email>
     </sender_contact>
     <employer_contact>

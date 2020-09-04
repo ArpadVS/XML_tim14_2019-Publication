@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import publications.exceptions.NotFoundException;
+import publications.model.paper.ScientificPaper;
+import publications.model.review.Review;
 import publications.service.ReviewService;
 
 @RestController
@@ -31,6 +33,11 @@ public class ReviewController {
 //	public ResponseEntity<?> getByTitle(@PathVariable(value = "title") String title) throws NotFoundException{
 //		return new ResponseEntity<>(reviewService.findByTitle(title), HttpStatus.OK);
 //	}
+	
+	@GetMapping(value = "/obj/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Review> getObjById(@PathVariable(value = "id") String id) throws Exception{
+		return new ResponseEntity<>(reviewService.getOne(id), HttpStatus.OK);
+	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<?> geAll() throws Exception{

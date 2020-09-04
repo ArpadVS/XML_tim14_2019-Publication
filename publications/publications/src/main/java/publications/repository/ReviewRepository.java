@@ -1,6 +1,9 @@
 package publications.repository;
 
-import static publications.util.constants.ApplicationConstants.*;
+import static publications.util.constants.ApplicationConstants.REVIEW_COLLECTION_ID;
+import static publications.util.constants.ApplicationConstants.REVIEW_ID_PREFIX;
+import static publications.util.constants.ApplicationConstants.REVIEW_XSD;
+import static publications.util.constants.ApplicationConstants.TARGET_NAMESPACE_PUBLICATION;
 
 import java.util.ArrayList;
 
@@ -15,11 +18,15 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import publications.exceptions.NotFoundException;
+import publications.model.paper.ScientificPaper;
+import publications.model.review.Review;
 import publications.model.user.DTO.ReviewDTO;
-import publications.model.user.DTO.ScientificPaperDTO;
 import publications.util.IdGenerator;
 import publications.util.db.exist_db.ExistDBManagement;
 import publications.util.dom_parser.DOMParser;
+
+import publications.util.marshalling.UnmarshallingUtil;
+
 
 @Repository
 public class ReviewRepository {
@@ -136,5 +143,12 @@ public class ReviewRepository {
 		} catch (Exception e) {
 			throw new NotFoundException("Could not find requested review");
 		}
+	}
+
+	public Review getOneObj(String id) throws NotFoundException {
+		String xml = findByID(id);
+		UnmarshallingUtil s = new UnmarshallingUtil();
+		Review obj = s.unmarshallReview(xml);
+		return obj;
 	}
 }

@@ -23,7 +23,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="Location"/>
+            <xs:element name="Location" type="xs:string"/>
             <xs:element name="Email">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
