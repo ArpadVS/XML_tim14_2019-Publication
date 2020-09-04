@@ -82,15 +82,15 @@ public class ExistController {
         
 
         //initiate letters
-        //File fl1 = new File(a.getPath() + "/instance1.xml");  
-        //File fl2 = new File(a.getPath() + "/letter2.xml");  
-        //jaxbContext = JAXBContext.newInstance(CoverLetter.class);  
-        //jaxbUnmarshaller = jaxbContext.createUnmarshaller();  
-        //CoverLetter pl1 = (CoverLetter) jaxbUnmarshaller.unmarshal(fl1);
-        //CoverLetter pl2 = (CoverLetter) jaxbUnmarshaller.unmarshal(fl2);
+        File fl1 = new File(a.getPath() + "/letter1.xml");  
+        File fl2 = new File(a.getPath() + "/letter2.xml");  
+        jaxbContext = JAXBContext.newInstance(CoverLetter.class);  
+        jaxbUnmarshaller = jaxbContext.createUnmarshaller();  
+        CoverLetter pl1 = (CoverLetter) jaxbUnmarshaller.unmarshal(fl1);
+        CoverLetter pl2 = (CoverLetter) jaxbUnmarshaller.unmarshal(fl2);
         
-        //letterRepository.save(MarshallLetter.marshall(pl1));
-        //letterRepository.save(MarshallLetter.marshall(pl2));
+        letterRepository.save(MarshallLetter.marshall(pl1));
+        letterRepository.save(MarshallLetter.marshall(pl2));
         
 
         //initiate review

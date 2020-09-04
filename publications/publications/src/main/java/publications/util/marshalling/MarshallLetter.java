@@ -15,7 +15,7 @@ public class MarshallLetter {
 			StringWriter sw = new StringWriter();
 			
 			// DefiniÅ¡e se JAXB kontekst (putanja do paketa sa JAXB bean-ovima)
-			JAXBContext context = JAXBContext.newInstance("publications.model.paper");
+			JAXBContext context = JAXBContext.newInstance("publications.model.letter");
 			
 			
 			// Marshaller je objekat zaduÅ¾en za konverziju iz objektnog u XML model
