@@ -64,9 +64,6 @@
 					Grade:
 						<xsl:value-of select="ns:review/ns:grade"></xsl:value-of>
 					</fo:block>
-
-
-
 				</fo:flow>
 			</fo:page-sequence>
 
