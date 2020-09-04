@@ -1,5 +1,12 @@
 package publications.repository;
 
+import static publications.util.constants.ApplicationConstants.SCIENTIFIC_PAPER_COLLECTION_ID;
+import static publications.util.constants.ApplicationConstants.SCIENTIFIC_PAPER_ID_PREFIX;
+import static publications.util.constants.ApplicationConstants.SCIENTIFIC_PAPER_XSD;
+import static publications.util.constants.ApplicationConstants.TARGET_NAMESPACE_PUBLICATION;
+
+import java.util.ArrayList;
+
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,18 +18,12 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import publications.exceptions.NotFoundException;
-import publications.model.paper.TScientificPaper;
-import publications.model.shared.TAuthor;
-import publications.model.user.User;
+import publications.model.paper.ScientificPaper;
 import publications.model.user.DTO.ScientificPaperDTO;
 import publications.util.IdGenerator;
 import publications.util.db.exist_db.ExistDBManagement;
 import publications.util.dom_parser.DOMParser;
 import publications.util.marshalling.UnmarshallingUtil;
-
-import static publications.util.constants.ApplicationConstants.*;
-
-import java.util.ArrayList;
 
 @Repository
 public class ScientificPaperRepository {
@@ -76,7 +77,7 @@ public class ScientificPaperRepository {
 			
 			ResourceIterator i = result.getIterator();
 			Resource res = null;
-			TScientificPaper scPaper = null;
+			ScientificPaper scPaper = null;
 			ScientificPaperDTO dto = new ScientificPaperDTO();
 			
 			while (i.hasMoreResources()) {
@@ -85,11 +86,11 @@ public class ScientificPaperRepository {
 					res = i.nextResource();
 					scPaper = unmarshallingUtil.unmarshallScientificPaper((res.getContent().toString()));
 					// System.out.println(res.getContent().toString());
-					dto.setTitle(scPaper.getTitle());
+					//dto.setTitle(scPaper.getTitle());
 					dto.setId(scPaper.getId());
-					for (TAuthor author: scPaper.getAuthors().getAuthor()) {
+					/*for (TAuthor author: scPaper.getAuthors().getAuthor()) {
 						dto.getAuthors().add(author.getFullName());
-					}
+					}*/
 					all.add(dto);
 				} finally {
 					// don't forget to cleanup resources
@@ -151,9 +152,9 @@ public class ScientificPaperRepository {
 		}
 	}
 	
-	public TScientificPaper getOneObj(String id) throws NotFoundException {
+	public ScientificPaper getOneObj(String id) throws NotFoundException {
 		String xml = findByID(id);
-		TScientificPaper obj = unmarshallingUtil.unmarshallScientificPaper(xml);
+		ScientificPaper obj = unmarshallingUtil.unmarshallScientificPaper(xml);
 		return obj;
 	}
 }

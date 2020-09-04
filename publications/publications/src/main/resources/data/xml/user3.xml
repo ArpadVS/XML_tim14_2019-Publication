@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<user xmlns="http://www.ftn.uns.ac.rs/tim14" user_id="user-3">
+    <first_name>Nikola</first_name>
+    <last_name>Maksimovic</last_name>
+    <email>niko12@gmail.com</email>
+    <username>nikola</username>
+    <password>$2y$16$PKlTwuERYLMLs1TEOGKQP.NhlRzyxu9BXZ2t9k0xeRK16vSEwy006</password>
+    <role>ROLE_EDITOR</role>
+    <expertise_list>expert</expertise_list>
+    <expertise_list>madjionicar</expertise_list>
+</user>

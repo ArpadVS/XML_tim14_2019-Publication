@@ -3,7 +3,6 @@
     targetNamespace="https://github.com/ArpadVS/XML_tim14_2019-Publication"
     xmlns:cl="https://github.com/ArpadVS/XML_tim14_2019-Publication"
     xmlns:cmn="https://github.com/ArpadVS/XML_tim14_2019-Publication">
-    <xs:include schemaLocation="Shared.xsd"/>
     <xs:element name="Cover_letter">
         <xs:complexType>
             <xs:sequence>
@@ -36,7 +35,7 @@
     </xs:complexType>
     <xs:complexType name="TBody">
         <xs:sequence>
-            <xs:element name="Paragraphs" type="cl:TParagraphs"/>
+            <xs:element name="Paragraphs" type="xs:string" maxOccurs="unbounded"/>
             <xs:element name="Thanksgiving" type="xs:string"/>
             <xs:element name="Closure" type="cl:TClosure"/>
         </xs:sequence>

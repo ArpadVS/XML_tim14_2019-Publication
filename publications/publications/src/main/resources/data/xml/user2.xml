@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<user xmlns="http://www.ftn.uns.ac.rs/tim14" user_id="user-2">
+    <first_name>Arpad</first_name>
+    <last_name>Varga</last_name>
+    <email>email2@gmail.com</email>
+    <username>arpad</username>
+    <password>$2y$16$PKlTwuERYLMLs1TEOGKQP.NhlRzyxu9BXZ2t9k0xeRK16vSEwy006</password>
+    <role>ROLE_REVIEWER</role>
+    <expertise_list>expert</expertise_list>
+    <expertise_list>madjionicar</expertise_list>
+</user>

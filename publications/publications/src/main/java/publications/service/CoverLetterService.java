@@ -1,15 +1,16 @@
 package publications.service;
 
-import static publications.util.constants.ApplicationConstants.*;
+import static publications.util.constants.ApplicationConstants.COVER_LETTER_XSLT;
+import static publications.util.constants.ApplicationConstants.COVER_LETTER_XSLT_FO;
 
 import java.io.ByteArrayOutputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import publications.model.user.User;
+import publications.exceptions.NotFoundException;
+import publications.model.letter.CoverLetter;
 import publications.repository.CoverLetterRepository;
-import publications.util.marshalling.MarshallUser;
 import publications.util.transformations.HTMLTransformer;
 import publications.util.transformations.XSLFOTransformer;
 
@@ -45,5 +46,9 @@ public class CoverLetterService {
 		String coverLetter = findOneByID(id);
 		// TODO izraditi xsl fo fajl
 		return xslfoTransformer.generatePDF(coverLetter, COVER_LETTER_XSLT_FO);
+	}
+
+	public CoverLetter getOne(String id) throws NotFoundException {
+		return coverLetterRepository.getOneObj(id);
 	}
 }

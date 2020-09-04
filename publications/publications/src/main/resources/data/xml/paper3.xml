@@ -2,7 +2,7 @@
 <scientificPaper xmlns="https://github.com/ArpadVS/XML_tim14_2019-Publication"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="https://github.com/ArpadVS/XML_tim14_2019-Publication ../xsd/ScientificPaper.xsd">
-    <title>This is paper 1</title>
+    <title>This is paper 3</title>
     <authors>
         <author>
             <fullName>fullName0</fullName>
@@ -40,20 +40,20 @@
     <content>
         <chapter>
             <title>title1</title>
-            <figure>
-                <title>title2</title>
+            <picture>
+                <description>description0</description>
                 <image>ZGVmYXVsdA==</image>
-            </figure>
+            </picture>
             <paragraph/>
         </chapter>
         <chapter>
-            <title>title3</title>
-            <figure>
-                <title>title4</title>
+            <title>title2</title>
+            <picture>
+                <description>description1</description>
                 <image>ZGVmYXVsdA==</image>
-            </figure>
+            </picture>
             <figure>
-                <title>title5</title>
+                <title>title3</title>
                 <image>ZGVmYXVsdA==</image>
             </figure>
         </chapter>
@@ -62,7 +62,7 @@
         <reference>
             <refAuthors/>
             <year>0</year>
-            <title>title6</title>
+            <title>title4</title>
             <publisher>
                 <institution>institution0</institution>
                 <city>city0</city>
@@ -70,7 +70,7 @@
             <webUrl>http://www.oxygenxml.com/</webUrl>
             <refAuthors/>
             <year>0</year>
-            <title>title7</title>
+            <title>title5</title>
             <publisher>
                 <institution>institution1</institution>
                 <city>city1</city>
@@ -80,7 +80,7 @@
         <reference>
             <refAuthors/>
             <year>0</year>
-            <title>title8</title>
+            <title>title6</title>
             <publisher>
                 <institution>institution2</institution>
                 <city>city2</city>
@@ -88,7 +88,7 @@
             <webUrl>http://www.oxygenxml.com/</webUrl>
             <refAuthors/>
             <year>0</year>
-            <title>title9</title>
+            <title>title7</title>
             <publisher>
                 <institution>institution3</institution>
                 <city>city3</city>

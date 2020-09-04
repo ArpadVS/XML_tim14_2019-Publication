@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import publications.exceptions.NotFoundException;
-import publications.model.paper.TScientificPaper;
+import publications.model.paper.ScientificPaper;
 import publications.service.ScientificPaperService;
 
 @RestController
@@ -28,8 +28,8 @@ public class ScientificPaperController {
 		return new ResponseEntity<>(scientificPaperService.findByID(id), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/obj/{id}", produces = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<?> getObjById(@PathVariable(value = "id") String id) throws Exception{
+	@GetMapping(value = "/obj/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ScientificPaper> getObjById(@PathVariable(value = "id") String id) throws Exception{
 		return new ResponseEntity<>(scientificPaperService.getOne(id), HttpStatus.OK);
 	}
 	

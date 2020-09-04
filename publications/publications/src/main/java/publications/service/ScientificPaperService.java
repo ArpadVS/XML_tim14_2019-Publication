@@ -1,25 +1,18 @@
 package publications.service;
 
-import static publications.util.constants.ApplicationConstants.*;
+import static publications.util.constants.ApplicationConstants.SCIENTIFIC_PAPER_XSLT;
+import static publications.util.constants.ApplicationConstants.SCIENTIFIC_PAPER_XSLT_FO;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.xmldb.api.base.Resource;
-import org.xmldb.api.base.ResourceIterator;
-import org.xmldb.api.base.ResourceSet;
-import org.xmldb.api.base.XMLDBException;
 
 import publications.exceptions.NotFoundException;
-import publications.model.paper.TScientificPaper;
-import publications.model.user.User;
+import publications.model.paper.ScientificPaper;
 import publications.model.user.DTO.ScientificPaperDTO;
 import publications.repository.ScientificPaperRepository;
-import publications.util.marshalling.MarshallUser;
-import publications.util.marshalling.UnmarshallingUtil;
 import publications.util.transformations.HTMLTransformer;
 import publications.util.transformations.XSLFOTransformer;
 
@@ -78,7 +71,7 @@ public class ScientificPaperService {
 		return all;
 	}
 	
-	public TScientificPaper getOne(String id) throws NotFoundException {
+	public publications.model.paper.ScientificPaper getOne(String id) throws NotFoundException {
 		return scientificPaperRepository.getOneObj(id);
 	}
 }
