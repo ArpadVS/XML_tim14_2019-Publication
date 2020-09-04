@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { BaseService } from 'src/app/shared/services/base.service';
 import { Observable } from 'rxjs';
+import { PaperLetter } from 'src/app/models/paper.letter.model';
 
 const ENDPOINTS = {
   SCIENTIFIC_PAPER: '/scientificPaper',
@@ -18,8 +19,8 @@ export class PublicationService extends BaseService{
   activeUser: User;
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/xml',
-      'Response-Type': 'application/json',
+      // 'Content-Type':  'application/xml',
+      // 'Response-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     })
   };
@@ -29,10 +30,10 @@ export class PublicationService extends BaseService{
     this.activeUser = JSON.parse( localStorage.getItem('user'));
   }
 
-  add(scientificPaper: string): void{
-    this.http.post(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}`, scientificPaper, this.httpOptions)
+  add(paperLetter: PaperLetter): void{
+    this.http.post(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}`, paperLetter, this.httpOptions)
       .subscribe(result => {
-        // console.log(result);
+        console.log(result);
         console.log('dodat rad')
         this.router.navigateByUrl('publications/all');
       });

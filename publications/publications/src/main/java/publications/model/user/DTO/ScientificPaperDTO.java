@@ -2,6 +2,8 @@ package publications.model.user.DTO;
 
 import java.util.ArrayList;
 
+import publications.model.paper.TAuthor;
+
 public class ScientificPaperDTO {
 
 	private String id;
@@ -29,7 +31,10 @@ public class ScientificPaperDTO {
 		this.title = title;
 	}
 	public ArrayList<String> getAuthors() {
-		return authors;
+		if (this.authors == null) {
+            this.authors = new ArrayList<>();
+        }
+        return this.authors;
 	}
 	public void setAuthors(ArrayList<String> authors) {
 		this.authors = authors;

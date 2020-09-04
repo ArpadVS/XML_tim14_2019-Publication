@@ -1,5 +1,7 @@
 package publications.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import publications.exceptions.NotFoundException;
 import publications.model.paper.ScientificPaper;
+import publications.model.user.DTO.ScientificPaperDTO;
+import publications.model.user.DTO.SubmitPaperLetterDTO;
+import publications.service.CoverLetterService;
 import publications.service.ScientificPaperService;
 
 @RestController
@@ -23,13 +28,16 @@ public class ScientificPaperController {
 	@Autowired
 	ScientificPaperService scientificPaperService;
 	
+	@Autowired
+	CoverLetterService coverLetterService;
+	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> getById(@PathVariable(value = "id") String id) throws Exception{
 		return new ResponseEntity<>(scientificPaperService.findByID(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/obj/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ScientificPaper> getObjById(@PathVariable(value = "id") String id) throws Exception{
+	public ResponseEntity<ScientificPaperDTO> getObjById(@PathVariable(value = "id") String id) throws Exception{
 		return new ResponseEntity<>(scientificPaperService.getOne(id), HttpStatus.OK);
 	}
 	
@@ -57,11 +65,24 @@ public class ScientificPaperController {
 	}
 	
 	@PreAuthorize("hasAnyRole('REVIEWER', 'AUTHOR', 'EDITOR')")
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> create1(@RequestBody SubmitPaperLetterDTO dto) throws Exception{
+		String paper_id = scientificPaperService.save(dto.getPaper());
+		String letter_id = coverLetterService.save(dto.getLetter());
+		ArrayList<String> ids = new ArrayList<>();
+		ids.add(paper_id);
+		ids.add(letter_id);
+		String jsonRetVal = "{\"paper_id\": \"" + paper_id + "\"}"; //ako posaljem samo id, na frontu ne moze da parsira string???
+		System.out.println(jsonRetVal);
+		return new ResponseEntity<>(ids, HttpStatus.CREATED);
+	}
+	
+	/*@PreAuthorize("hasAnyRole('REVIEWER', 'AUTHOR', 'EDITOR')")
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> create(@RequestBody String scientificPaper) throws Exception{
 		String id = scientificPaperService.save(scientificPaper);
 		String jsonRetVal = "{\"id\": \"" + id + "\"}"; //ako posaljem samo id, na frontu ne moze da parsira string???
 		System.out.println(jsonRetVal);
 		return new ResponseEntity<>(jsonRetVal, HttpStatus.CREATED);
-	}
+	}*/
 }

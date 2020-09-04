@@ -27,7 +27,7 @@
             <xs:element maxOccurs="3" name="role" type="tim14:TRole"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="expertise" type="xs:string"/>
         </xs:sequence>
-        <xs:attribute name="user_id" type="xs:ID"/>
+        <xs:attribute name="user_id" type="xs:ID" use="optional"/>
     </xs:complexType>
     <xs:simpleType name="TRole">
         <xs:restriction base="xs:string">
