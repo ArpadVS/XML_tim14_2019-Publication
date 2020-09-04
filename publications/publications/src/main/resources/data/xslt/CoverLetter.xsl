@@ -10,11 +10,17 @@
             <head>
                 
                 <title>COVER LETTER</title>
+                <style type="text/css">
+					.tab {margin-left:40px;
+					margin-top:0px;};
+				</style>
             </head>
             <body>
                 
                 <h1>Cover Letter</h1>
-                <p><b>Sender Contact:</b> 
+                <b>Sender Contact:</b>
+                <p class="tab"> 
+                	
                     <br/>Name: 
                     <xsl:value-of select="ns2:Cover_letter/ns2:sender_contact/ns2:Name"/>
                     <br/>Phone number: 
@@ -26,7 +32,8 @@
                     
                 </p>
                 
-                <p><b>Employer Contact:</b> 
+                <b>Employer Contact:</b>
+                <p class="tab"> 
                     <br/>Name: 
                     <xsl:value-of select="ns2:Cover_letter/ns2:employer_contact/ns2:Name"/>
                     <br/>Phone number: 
@@ -38,9 +45,12 @@
                     
                 </p>
                 
-                <p><b>Body:</b> 
-                    <br/>Paragraphs: 
-                    <xsl:value-of select="ns2:Cover_letter/ns2:body/ns2:Paragraphs/ns2:quote"/>
+                <b>Body:</b> 
+                <p class="tab">
+                    <br/>Paragraphs:
+                    <xsl:for-each select="ns2:Cover_letter/ns2:body/ns2:Paragraphs"> 
+                    	<xsl:value-of select="."/> 
+                    </xsl:for-each> <br></br>
                     <br/>Thanksgiving: 
                     <xsl:value-of select="ns2:Cover_letter/ns2:body/ns2:Thanksgiving"/>
                     <br/><br/><b>Closure: </b>
