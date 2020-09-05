@@ -5,6 +5,7 @@ import { AllPublicationsComponent } from './publications/all-publications/all-pu
 import { AddPublicationComponent } from './publications/add-publication/add-publication.component';
 import { RoleGuard } from './shared/guards/role.guard';
 import { AddReviewComponent } from './reviews/add-review/add-review.component';
+import { MyPublicationsComponent } from './publications/my-publications/my-publications.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,12 @@ const routes: Routes = [
     component: AddReviewComponent,
     canActivate: [RoleGuard],
     data: {expectedRoles: 'ROLE_REVIEWER|ROLE_EDITOR'}
+  },
+  {
+    path: 'publications/my',
+    component: MyPublicationsComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_AUTHOR|ROLE_REVIEWER|ROLE_EDITOR'}
   }
 ];
 

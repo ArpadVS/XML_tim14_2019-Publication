@@ -1,6 +1,7 @@
 package publications.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +24,10 @@ import publications.model.DTO.ScientificPaperDTO;
 import publications.model.DTO.SearchDTO;
 import publications.model.DTO.SubmitPaperLetterDTO;
 import publications.model.paper.ScientificPaper;
+import publications.model.user.User;
 import publications.service.CoverLetterService;
 import publications.service.ScientificPaperService;
+import publications.service.UserService;
 
 @RestController
 @RequestMapping("/api/scientificPaper")
@@ -35,6 +38,9 @@ public class ScientificPaperController {
 	
 	@Autowired
 	CoverLetterService coverLetterService;
+	
+	@Autowired
+	UserService userService;
 	
 	@GetMapping(value = "/id/{id}", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> getById(@PathVariable(value = "id") String id) throws Exception{
@@ -55,6 +61,14 @@ public class ScientificPaperController {
 	public ResponseEntity<?> geAll() throws Exception{
 		return new ResponseEntity<>(scientificPaperService.getAll(), HttpStatus.OK);
 	}
+	
+	@PreAuthorize("hasAnyRole('REVIEWER', 'AUTHOR', 'EDITOR')")
+	@GetMapping(value="/myPapers", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> geByLoggedUser(Principal user) throws Exception{
+		User found = userService.findByUsername(user.getName());
+		return new ResponseEntity<>(scientificPaperService.getByLoggedUser(found), HttpStatus.OK);
+	}
+	
 	
 	@GetMapping(value="/status/{status}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> geAllByStatus(@PathVariable(value = "status") String status) throws Exception{

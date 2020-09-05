@@ -50,4 +50,8 @@ export class PublicationService extends BaseService{
   getAll(): Observable<any>{
     return this.http.get(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}`);
   }
+
+  getMy(): Observable<any>{
+    return this.http.get(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}` + '/myPapers', this.httpOptions);
+  }
 }

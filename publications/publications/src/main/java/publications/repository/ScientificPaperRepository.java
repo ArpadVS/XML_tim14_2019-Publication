@@ -292,4 +292,6 @@ public class ScientificPaperRepository {
 		}
 		return dto;
 	}
+	
+	
 }

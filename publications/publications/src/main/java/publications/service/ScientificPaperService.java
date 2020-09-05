@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import publications.exceptions.NotFoundException;
 import publications.model.paper.ScientificPaper;
 import publications.model.paper.TPaperStatus;
+import publications.model.user.User;
 import publications.model.DTO.PaperViewDTO;
 import publications.model.DTO.ScientificPaperDTO;
 import publications.model.DTO.SearchDTO;
@@ -149,6 +150,22 @@ public class ScientificPaperService {
 	
 	public String updateStatusRevisionNeeded(String id) throws Exception {
 		return scientificPaperRepository.updateStatus(TPaperStatus.REVISION_NEEDED, id);
+	}
+	
+	public ArrayList<ScientificPaperDTO> getByLoggedUser(User user){
+		ArrayList<ScientificPaperDTO> all = getAll();
+		ArrayList<ScientificPaperDTO> filtered = new ArrayList<>();
+		for(ScientificPaperDTO dto: all) {
+			for(String author: dto.getAuthors()) {
+				if(author.equals(user.getFirst_name() + " " + user.getLast_name())) {
+					filtered.add(dto);
+					break;
+				}
+			}
+		}
+		
+		return filtered;
+		
 	}
 	
 	

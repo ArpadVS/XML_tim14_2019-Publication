@@ -17,6 +17,7 @@ import { HttpInterceptorService } from './shared/services/http-interceptor.servi
 import { AllPublicationsComponent } from './publications/all-publications/all-publications.component';
 import { AddPublicationComponent } from './publications/add-publication/add-publication.component';
 import { AddReviewComponent } from './reviews/add-review/add-review.component';
+import { MyPublicationsComponent } from './publications/my-publications/my-publications.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { AddReviewComponent } from './reviews/add-review/add-review.component';
     AllPublicationsComponent,
     AddPublicationComponent,
     AddReviewComponent,
+    MyPublicationsComponent,
   ],
   imports: [
     BrowserModule,
