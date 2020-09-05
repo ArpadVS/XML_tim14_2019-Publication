@@ -23,10 +23,10 @@ import org.xmldb.api.modules.XMLResource;
 
 import publications.exceptions.MarshallingFailedException;
 import publications.exceptions.NotFoundException;
+import publications.model.DTO.ScientificPaperDTO;
 import publications.model.paper.ScientificPaper;
 import publications.model.paper.TAuthor;
 import publications.model.paper.TPaperStatus;
-import publications.model.user.DTO.ScientificPaperDTO;
 import publications.util.IdGenerator;
 import publications.util.db.exist_db.ExistDBManagement;
 import publications.util.dom_parser.DOMParser;

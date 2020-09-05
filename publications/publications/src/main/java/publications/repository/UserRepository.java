@@ -14,10 +14,10 @@ import org.xmldb.api.base.XMLDBException;
 
 import publications.exceptions.MarshallingFailedException;
 import publications.exceptions.NotFoundException;
+import publications.model.DTO.ScientificPaperDTO;
 import publications.model.paper.ScientificPaper;
 import publications.model.paper.TAuthor;
 import publications.model.user.User;
-import publications.model.user.DTO.ScientificPaperDTO;
 import publications.util.IdGenerator;
 import publications.util.db.exist_db.ExistDBManagement;
 import publications.util.dom_parser.DOMParser;

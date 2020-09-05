@@ -5,10 +5,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import publications.model.DTO.RegisterUserDTO;
+import publications.model.DTO.UserDTO;
 import publications.model.user.Role;
 import publications.model.user.User;
-import publications.model.user.DTO.RegisterUserDTO;
-import publications.model.user.DTO.UserDTO;
 
 @Component
 public class UserConverter {

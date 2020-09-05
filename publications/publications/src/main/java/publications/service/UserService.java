@@ -14,9 +14,9 @@ import org.w3c.dom.Document;
 
 import publications.exceptions.MarshallingFailedException;
 import publications.exceptions.NotFoundException;
+import publications.model.DTO.ScientificPaperDTO;
 import publications.model.user.Role;
 import publications.model.user.User;
-import publications.model.user.DTO.ScientificPaperDTO;
 import publications.repository.UserRepository;
 import publications.util.dom_parser.DOMParser;
 import publications.util.marshalling.MarshallUser;
