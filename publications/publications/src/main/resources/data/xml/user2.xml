@@ -6,6 +6,6 @@
     <username>arpad</username>
     <password>$2y$16$PKlTwuERYLMLs1TEOGKQP.NhlRzyxu9BXZ2t9k0xeRK16vSEwy006</password>
     <role>ROLE_REVIEWER</role>
-    <expertise_list>expert</expertise_list>
-    <expertise_list>madjionicar</expertise_list>
+    <expertise>expert</expertise>
+    <expertise>madjionicar</expertise>
 </user>

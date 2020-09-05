@@ -1,0 +1,15 @@
+<form [formGroup]="addExpertiseForm" (ngSubmit)="addExpertiseForm.valid && onAddExpertiseSubmit()" novalidate>
+    <div class="form-container">  
+      <mat-form-field>
+          <input id="expertise"
+                 matInput
+                 formControlName="expertise"
+                 placeholder="Enter your expertise" />
+        </mat-form-field>
+
+        <button mat-button type="submit" 
+                id="submit"
+                class="mat-raised-button mat-primary" 
+                [disabled]="!addExpertiseForm.valid">Add</button>
+    </div>
+  </form>

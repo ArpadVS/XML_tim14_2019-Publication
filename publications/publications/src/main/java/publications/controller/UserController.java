@@ -189,5 +189,11 @@ public class UserController {
 		return new ResponseEntity<>(userService.getAllReviewers(), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasAnyRole('AUTHOR', 'REVIEWER', 'EDITOR')")
+	@PutMapping(value="/expertise/{expertise}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> revisionNeeded(@PathVariable(value = "expertise") String expertise, Principal user) throws Exception{
+		User logged = userService.findByUsername(user.getName());
+		return new ResponseEntity<>(userService.addExpertise(logged.getUser_id(), expertise), HttpStatus.OK);
+	}
 
 }
