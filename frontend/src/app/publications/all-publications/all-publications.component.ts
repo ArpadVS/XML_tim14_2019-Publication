@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { Publication } from 'src/app/models/publication.model';
+import { SearchDTO } from 'src/app/models/searchDTO.model';
 import { PublicationService } from '../service/publication.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class AllPublicationsComponent implements OnInit {
   publications: Publication[];
 
   dataSource: MatTableDataSource<Publication>;
+  searchTerm = '';
 
   constructor(
     private publicationService: PublicationService,
@@ -22,6 +24,18 @@ export class AllPublicationsComponent implements OnInit {
 
   ngOnInit(): void {
     this._getData();
+  }
+
+  search(){
+    console.log('searching for ' + this.searchTerm);
+    const s: SearchDTO = {text : this.searchTerm};
+    this.publicationService.searchText(s).subscribe((res: Publication[]) => {
+      if (res != null) {
+        this.publications = res;
+        console.log(res);
+        this.initializeDataSource();
+      }
+    });
   }
 
   _getData(){
