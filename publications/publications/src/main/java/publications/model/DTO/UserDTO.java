@@ -1,4 +1,4 @@
-package publications.model.user.DTO;
+package publications.model.DTO;
 
 public class UserDTO {
 	private String first_name;

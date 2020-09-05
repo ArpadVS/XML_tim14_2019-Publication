@@ -1,4 +1,4 @@
-package publications.model.user.DTO;
+package publications.model.DTO;
 
 import java.util.ArrayList;
 

@@ -4,15 +4,25 @@ import static publications.util.constants.ApplicationConstants.SCIENTIFIC_PAPER_
 import static publications.util.constants.ApplicationConstants.SCIENTIFIC_PAPER_XSLT_FO;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.apache.catalina.util.ResourceSet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import publications.exceptions.NotFoundException;
-import publications.model.paper.ScientificPaper;
-import publications.model.user.DTO.ScientificPaperDTO;
+import publications.model.DTO.PaperViewDTO;
+import publications.model.DTO.ScientificPaperDTO;
+import publications.model.DTO.SearchDTO;
 import publications.repository.ScientificPaperRepository;
+import publications.util.db.fuseki_jena.FusekiManagement;
 import publications.util.transformations.HTMLTransformer;
 import publications.util.transformations.XSLFOTransformer;
 
@@ -74,6 +84,30 @@ public class ScientificPaperService {
 	public ScientificPaperDTO getOne(String id) throws NotFoundException {
 		return scientificPaperRepository.getOneObj(id);
 	}
+
+	public ArrayList<String> searhByMetadata(SearchDTO dto) throws IOException {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("title", dto.getTitle());
+		params.put("language", dto.getLanguage());
+		params.put("recievedDate", dto.getDate());
+		params.put("author", dto.getAuthors());
+		params.put("keyword", dto.getKeywords());
+		System.out.println(params.toString());
+		ArrayList<String> titles = FusekiManagement.executeQuery(params);
+		return titles;
+	}
+	
+	private String getLoggedUser() {
+		String username = null;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			username = authentication.getName();
+		}
+		return username;
+	}
+	
+	
+
 	
 	
 }

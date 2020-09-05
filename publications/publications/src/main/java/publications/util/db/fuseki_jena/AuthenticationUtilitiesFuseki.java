@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/**
- * Utilities to support and simplify examples.
- */
 public class AuthenticationUtilitiesFuseki {
 	/**
 	 * ExampleProperties represents the configuration for the examples.

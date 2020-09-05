@@ -18,9 +18,9 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import publications.exceptions.NotFoundException;
+import publications.model.DTO.ReviewDTO;
 import publications.model.paper.ScientificPaper;
 import publications.model.review.Review;
-import publications.model.user.DTO.ReviewDTO;
 import publications.util.IdGenerator;
 import publications.util.db.exist_db.ExistDBManagement;
 import publications.util.dom_parser.DOMParser;

@@ -1,6 +1,8 @@
 package publications.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import publications.exceptions.NotFoundException;
+import publications.model.DTO.PaperViewDTO;
+import publications.model.DTO.ScientificPaperDTO;
+import publications.model.DTO.SearchDTO;
+import publications.model.DTO.SubmitPaperLetterDTO;
 import publications.model.paper.ScientificPaper;
-import publications.model.user.DTO.ScientificPaperDTO;
-import publications.model.user.DTO.SubmitPaperLetterDTO;
 import publications.service.CoverLetterService;
 import publications.service.ScientificPaperService;
 
@@ -75,6 +79,12 @@ public class ScientificPaperController {
 		String jsonRetVal = "{\"paper_id\": \"" + paper_id + "\"}"; //ako posaljem samo id, na frontu ne moze da parsira string???
 		System.out.println(jsonRetVal);
 		return new ResponseEntity<>(ids, HttpStatus.CREATED);
+	}
+	
+	@PostMapping(value = "/searchByMetadata")
+	public ResponseEntity<List<String>> searchByMetadata(@RequestBody SearchDTO dto) throws IOException {
+		List<String> result = scientificPaperService.searhByMetadata(dto);
+		return new ResponseEntity<List<String>>(result, HttpStatus.OK);
 	}
 	
 	/*@PreAuthorize("hasAnyRole('REVIEWER', 'AUTHOR', 'EDITOR')")
