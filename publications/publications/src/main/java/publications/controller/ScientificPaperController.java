@@ -19,11 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import publications.exceptions.NotFoundException;
-import publications.model.DTO.PaperViewDTO;
 import publications.model.DTO.ScientificPaperDTO;
 import publications.model.DTO.SearchDTO;
+import publications.model.DTO.SearchTextDTO;
 import publications.model.DTO.SubmitPaperLetterDTO;
-import publications.model.paper.ScientificPaper;
 import publications.model.user.User;
 import publications.service.CoverLetterService;
 import publications.service.ScientificPaperService;
@@ -153,6 +152,12 @@ public class ScientificPaperController {
 		List<String> result = scientificPaperService.searhByMetadata(dto);
 		return new ResponseEntity<List<String>>(result, HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/searchByText")
+	public ResponseEntity<?> searchByText(@RequestBody SearchTextDTO dto) throws IOException {
+		return new ResponseEntity<>(scientificPaperService.searchByText(dto), HttpStatus.OK);
+	}
+	
 	
 	/*@PreAuthorize("hasAnyRole('REVIEWER', 'AUTHOR', 'EDITOR')")
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
