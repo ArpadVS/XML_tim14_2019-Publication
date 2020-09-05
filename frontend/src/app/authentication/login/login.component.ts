@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       ]]
     });
     if (this.authService.isLogedIn()) {
-      this.router.navigate(['certificates/all']);
+      this.router.navigate(['publications/all']);
     }
   }
 

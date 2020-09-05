@@ -41,7 +41,7 @@ export class MyPublicationsComponent implements OnInit {
   }
 
   getDisplayedColumns(){
-    return ['Index', 'Author', 'Title', 'HTML', 'PDF'];
+    return ['Index', 'Author', 'Title', 'HTML', 'PDF', 'Status'];
   }
 
   redirectToAddNewPage() {

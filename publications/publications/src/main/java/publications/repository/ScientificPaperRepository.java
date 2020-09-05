@@ -169,6 +169,7 @@ public class ScientificPaperRepository {
 					scPaper = unmarshallingUtil.unmarshallScientificPaper((res.getContent().toString()));
 					dto.setId(scPaper.getId());
 					dto.setTitle(scPaper.getTitle());
+					dto.setStatus(scPaper.getStatus().value());
 					for (TAuthor author : scPaper.getAuthors().getAuthor()) {
 						dto.getAuthors().add(author.getFullName());
 					}
@@ -218,6 +219,7 @@ public class ScientificPaperRepository {
 					scPaper = unmarshallingUtil.unmarshallScientificPaper((res.getContent().toString()));
 					dto.setId(scPaper.getId());
 					dto.setTitle(scPaper.getTitle());
+					dto.setStatus(scPaper.getStatus().value());
 					for (TAuthor author : scPaper.getAuthors().getAuthor()) {
 						dto.getAuthors().add(author.getFullName());
 					}

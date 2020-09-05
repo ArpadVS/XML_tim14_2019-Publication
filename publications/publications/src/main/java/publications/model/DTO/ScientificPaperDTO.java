@@ -9,11 +9,20 @@ public class ScientificPaperDTO {
 	private String id;
 	private String title;
 	private ArrayList<String> authors;
-	public ScientificPaperDTO(String id, String title, ArrayList<String> authors) {
+	private String status;
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public ScientificPaperDTO(String id, String title, ArrayList<String> authors, String status) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.authors = authors;
+		this.status = status;
 	}
 	public ScientificPaperDTO() {
 		super();

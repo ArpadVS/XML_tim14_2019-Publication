@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import publications.model.letter.CoverLetter;
 import publications.model.paper.ScientificPaper;
+import publications.model.paper.TPaperStatus;
 import publications.model.review.Review;
 import publications.model.user.User;
 import publications.repository.CoverLetterRepository;
@@ -72,13 +73,19 @@ public class ExistController {
         //initiate papers
         File fp1 = new File(a.getPath() + "/paper1.xml");  
         File fp2 = new File(a.getPath() + "/paper2.xml");  
+        File fp3 = new File(a.getPath() + "/paper3.xml"); 
         jaxbContext = JAXBContext.newInstance(ScientificPaper.class);  
         jaxbUnmarshaller = jaxbContext.createUnmarshaller();  
         ScientificPaper pp1 = (ScientificPaper) jaxbUnmarshaller.unmarshal(fp1);
         ScientificPaper pp2 = (ScientificPaper) jaxbUnmarshaller.unmarshal(fp2);
+        ScientificPaper pp3 = (ScientificPaper) jaxbUnmarshaller.unmarshal(fp3);
+        pp1.setStatus(TPaperStatus.TO_BE_REVIEWED);
+        pp2.setStatus(TPaperStatus.TO_BE_REVIEWED);
+        pp3.setStatus(TPaperStatus.TO_BE_REVIEWED);
         
         paperRepository.save(MarshallPaper.marshall(pp1));
         paperRepository.save(MarshallPaper.marshall(pp2));
+        paperRepository.save(MarshallPaper.marshall(pp3));
         
 
         //initiate letters
