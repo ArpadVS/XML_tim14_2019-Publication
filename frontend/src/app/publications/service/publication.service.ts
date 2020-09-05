@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user.model';
 import { BaseService } from 'src/app/shared/services/base.service';
 import { Observable } from 'rxjs';
 import { PaperLetter } from 'src/app/models/paper.letter.model';
+import { SearchDTO } from 'src/app/models/searchDTO.model';
 
 const ENDPOINTS = {
   SCIENTIFIC_PAPER: '/scientificPaper',
@@ -24,7 +25,7 @@ export class PublicationService extends BaseService{
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     })
   };
-  
+
   constructor(private http: HttpClient, private router: Router) {
     super();
     this.activeUser = JSON.parse( localStorage.getItem('user'));
@@ -69,6 +70,10 @@ export class PublicationService extends BaseService{
 
   getMy(): Observable<any>{
     return this.http.get(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}` + '/myPapers', this.httpOptions);
+  }
+
+  searchText(term: SearchDTO): Observable<any>{
+    return this.http.post(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}` + '/searchByText', term, this.httpOptions);
   }
 
   getForReview(): Observable<any>{
