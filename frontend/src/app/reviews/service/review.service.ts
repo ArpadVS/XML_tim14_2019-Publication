@@ -34,16 +34,16 @@ export class ReviewService  extends BaseService{
     this.http.post(`${this.baseUrl}${ENDPOINTS.REVIEW}`, review, this.httpOptions)
       .subscribe(result => {
         // console.log(result);
-        console.log('dodat review')
+        console.log('dodat review');
         this.router.navigateByUrl('publications/all');
       });
   }
 
   addRevision(revision: string, id: string): void{
-    this.http.post(`${this.baseUrl}${ENDPOINTS.REVISE}` + id, revision, this.httpOptions)
+    this.http.put(`${this.baseUrl}${ENDPOINTS.REVISE}` + id, revision, this.httpOptions)
       .subscribe(result => {
         // console.log(result);
-        console.log('dodat revision')
+        console.log('dodat revision');
         this.router.navigateByUrl('publications/all');
       });
   }

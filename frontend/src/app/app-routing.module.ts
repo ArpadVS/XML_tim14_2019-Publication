@@ -8,6 +8,7 @@ import { AddReviewComponent } from './reviews/add-review/add-review.component';
 import { MyPublicationsComponent } from './publications/my-publications/my-publications.component';
 import { ReviewPublicationsComponent } from './publications/review-publications/review-publications.component';
 import { AddExpertiseComponent } from './add-expertise/add-expertise.component';
+import { AddRevisionComponent } from './add-revision/add-revision.component';
 
 
 const routes: Routes = [
@@ -40,6 +41,12 @@ const routes: Routes = [
   {
     path: 'expertise/add',
     component: AddExpertiseComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_AUTHOR|ROLE_REVIEWER|ROLE_EDITOR'}
+  },
+  {
+    path: 'revision/add',
+    component: AddRevisionComponent,
     canActivate: [RoleGuard],
     data: {expectedRoles: 'ROLE_AUTHOR|ROLE_REVIEWER|ROLE_EDITOR'}
   }
