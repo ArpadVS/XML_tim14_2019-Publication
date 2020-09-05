@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/authentication/services/auth.service';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +29,10 @@ export class HeaderComponent implements OnInit {
 
   logout(){
     this.authService.logOut();
+  }
+
+  get username(){
+    return this.authService.getUsername();
   }
 
 }

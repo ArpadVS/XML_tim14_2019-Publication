@@ -133,4 +133,10 @@ export class AuthService extends BaseService {
         console.log(result);
       });
   }
+
+  getUsername(){
+    const user: any = JSON.parse(localStorage.getItem('user'));
+    const actUser: User = user;
+    return actUser.username;
+  }
 }
