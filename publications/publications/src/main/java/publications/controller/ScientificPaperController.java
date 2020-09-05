@@ -91,11 +91,13 @@ public class ScientificPaperController {
 		return new ResponseEntity<>(scientificPaperService.getAllForReview(), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasAnyRole('AUTHOR','REVIEWER', 'EDITOR')")
 	@PutMapping(value="/revise/{id}", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> revise(@PathVariable(value = "id") String id, @RequestBody String revision) throws Exception{
 		return new ResponseEntity<>(scientificPaperService.revise(revision, id), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasAnyRole('AUTHOR','REVIEWER', 'EDITOR')")
 	@PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> update(@PathVariable(value = "id") String id, @RequestBody String update) throws Exception{
 		return new ResponseEntity<>(scientificPaperService.update(update, id), HttpStatus.OK);
