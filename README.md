@@ -6,7 +6,7 @@ Tim 14.
   - Marieta Rakoš SW-43/2016
   - Arpad Varga Šomođi  SW-35/2016
   
-Video: [link]()
+Video: [link](https://drive.google.com/drive/folders/1bV_JzbtO3T7tghLGvNjmtHekz8JLnOe5?usp=sharing)
 
 # Prerequisites
 - Spring Boot + eclipse - Backend
