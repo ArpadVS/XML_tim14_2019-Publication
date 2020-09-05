@@ -56,6 +56,14 @@ export class PublicationService extends BaseService{
       });
   }
 
+  revisionNeeded(id: string): void{
+    this.http.put(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}` + '/revisionNeeded/' + id, this.httpOptions)
+      .subscribe(result => {
+        console.log(result);
+        console.log('revision needed');
+      });
+  }
+
   getHTML(id: string){
     window.open(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}` + '/html/' + id);
   }

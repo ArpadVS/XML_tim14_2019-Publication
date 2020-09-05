@@ -41,7 +41,7 @@ export class ReviewPublicationsComponent implements OnInit {
   }
 
   getDisplayedColumns(){
-    return ['Index', 'Author', 'Title', 'HTML', 'PDF', 'Accept', 'Reject'];
+    return ['Index', 'Author', 'Title', 'HTML', 'PDF', 'Accept', 'Reject', 'Revision Needed'];
   }
 
   redirectToAddNewPage() {
@@ -66,6 +66,10 @@ export class ReviewPublicationsComponent implements OnInit {
 
   reject(id: string){
     this.publicationService.reject(id);
+  }
+
+  revisionNeeded(id: string){
+    this.publicationService.revisionNeeded(id);
   }
 
 }

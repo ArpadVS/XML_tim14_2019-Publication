@@ -20,6 +20,7 @@ import { AddReviewComponent } from './reviews/add-review/add-review.component';
 import { MyPublicationsComponent } from './publications/my-publications/my-publications.component';
 import { ReviewPublicationsComponent } from './publications/review-publications/review-publications.component';
 import { AddExpertiseComponent } from './add-expertise/add-expertise.component';
+import { AddRevisionComponent } from './add-revision/add-revision.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { AddExpertiseComponent } from './add-expertise/add-expertise.component';
     MyPublicationsComponent,
     ReviewPublicationsComponent,
     AddExpertiseComponent,
+    AddRevisionComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,26 @@
+
+
+    <form [formGroup]="addRevisionForm" (ngSubmit)="onAddRevisionSubmit()" novalidate>
+        <div class="form-container form-group">  
+          <mat-form-field style="width: 600px;" appearance="outline">
+              <textarea id="revision"
+                     matInput rows="10"
+                     formControlName="revision"
+                     placeholder="Enter your revision" ></textarea>
+            </mat-form-field>
+
+            <mat-form-field  appearance="outline">
+              <input id="revision"
+                     matInput 
+                     formControlName="paper_id"
+                     placeholder="Enter your scientific paper id" />
+            </mat-form-field>
+  
+          <br/>
+            <button mat-button type="submit" 
+                    id="submit"
+                    class="mat-raised-button mat-primary" 
+                    [disabled]="!addRevisionForm.valid">Submit</button>
+        </div>
+      </form>
+  

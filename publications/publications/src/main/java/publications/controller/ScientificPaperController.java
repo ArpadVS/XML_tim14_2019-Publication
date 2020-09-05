@@ -119,13 +119,15 @@ public class ScientificPaperController {
 	@PreAuthorize("hasAnyRole('REVIEWER', 'EDITOR')")
 	@PutMapping(value="/accept/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> accept(@PathVariable(value = "id") String id) throws Exception{
-		return new ResponseEntity<>(scientificPaperService.updateStatusAccept(id), HttpStatus.OK);
+		scientificPaperService.updateStatusAccept(id);
+		return new ResponseEntity<>( HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAnyRole('REVIEWER', 'EDITOR')")
 	@PutMapping(value="/reject/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> reject(@PathVariable(value = "id") String id) throws Exception{
-		return new ResponseEntity<>(scientificPaperService.updateStatusReject(id), HttpStatus.OK);
+		scientificPaperService.updateStatusReject(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAnyRole('REVIEWER', 'EDITOR')")
@@ -143,7 +145,8 @@ public class ScientificPaperController {
 	@PreAuthorize("hasAnyRole('REVIEWER', 'EDITOR')")
 	@PutMapping(value="/inReviewProcess/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> inReviewProcess(@PathVariable(value = "id") String id) throws Exception{
-		return new ResponseEntity<>(scientificPaperService.updateStatusInReviewProcess(id), HttpStatus.OK);
+		scientificPaperService.updateStatusInReviewProcess(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	
