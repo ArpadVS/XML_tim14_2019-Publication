@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import publications.exceptions.NotFoundException;
 import publications.model.paper.ScientificPaper;
+import publications.model.paper.TPaperStatus;
 import publications.model.user.DTO.ScientificPaperDTO;
 import publications.repository.ScientificPaperRepository;
 import publications.util.transformations.HTMLTransformer;
@@ -34,6 +35,10 @@ public class ScientificPaperService {
 	
 	public String update(String scientificPaper, String id) throws Exception {
 		return scientificPaperRepository.update(scientificPaper, id);
+	}
+	
+	public String revise(String scientificPaper, String id) throws Exception {
+		return scientificPaperRepository.revise(scientificPaper, id);
 	}
 	
 	public String findByID(String id) throws Exception {
@@ -77,9 +82,38 @@ public class ScientificPaperService {
 		return all;
 	}
 	
+	public ArrayList<ScientificPaperDTO> getAllForReview() {
+		String xPathExpression = String.format("//scientificPaper[@status='%s' or @status='%s']", "toBeReviewed", "revisionDone");
+		ArrayList<ScientificPaperDTO> all = scientificPaperRepository.findMultipleByExpression(xPathExpression);
+		return all;
+	}
+	
 	
 	public ScientificPaperDTO getOne(String id) throws NotFoundException {
 		return scientificPaperRepository.getOneObj(id);
+	}
+	
+	
+	
+	
+	public String updateStatusInReviewProcess(String id) throws Exception {
+		return scientificPaperRepository.updateStatus(TPaperStatus.IN_REVIEW_PROCESS, id);
+	}
+	
+	public String updateStatusReviewed(String id) throws Exception {
+		return scientificPaperRepository.updateStatus(TPaperStatus.REVIEWED, id);
+	}
+	
+	public String updateStatusAccept(String id) throws Exception {
+		return scientificPaperRepository.updateStatus(TPaperStatus.ACCEPTED, id);
+	}
+	
+	public String updateStatusReject(String id) throws Exception {
+		return scientificPaperRepository.updateStatus(TPaperStatus.REJECTED, id);
+	}
+	
+	public String updateStatusRevisionNeeded(String id) throws Exception {
+		return scientificPaperRepository.updateStatus(TPaperStatus.REVISION_NEEDED, id);
 	}
 	
 	

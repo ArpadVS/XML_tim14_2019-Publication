@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -77,10 +78,58 @@ public class ScientificPaperController {
 		ArrayList<String> ids = new ArrayList<>();
 		ids.add(paper_id);
 		ids.add(letter_id);
-		String jsonRetVal = "{\"paper_id\": \"" + paper_id + "\"}"; //ako posaljem samo id, na frontu ne moze da parsira string???
-		System.out.println(jsonRetVal);
+		//String jsonRetVal = "{\"paper_id\": \"" + paper_id + "\"}"; //ako posaljem samo id, na frontu ne moze da parsira string???
+		//System.out.println(jsonRetVal);
 		return new ResponseEntity<>(ids, HttpStatus.CREATED);
 	}
+	
+	@PreAuthorize("hasRole('EDITOR')")
+	@GetMapping(value = "/forReview", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getPapersForReview(){
+		return new ResponseEntity<>(scientificPaperService.getAllForReview(), HttpStatus.OK);
+	}
+	
+	@PutMapping(value="/revise/{id}", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> revise(@PathVariable(value = "id") String id, @RequestBody String revision) throws Exception{
+		return new ResponseEntity<>(scientificPaperService.revise(revision, id), HttpStatus.OK);
+	}
+	
+	@PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> update(@PathVariable(value = "id") String id, @RequestBody String update) throws Exception{
+		return new ResponseEntity<>(scientificPaperService.update(update, id), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasAnyRole('REVIEWER', 'EDITOR')")
+	@PutMapping(value="/accept/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> accept(@PathVariable(value = "id") String id) throws Exception{
+		return new ResponseEntity<>(scientificPaperService.updateStatusAccept(id), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasAnyRole('REVIEWER', 'EDITOR')")
+	@PutMapping(value="/reject/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> reject(@PathVariable(value = "id") String id) throws Exception{
+		return new ResponseEntity<>(scientificPaperService.updateStatusReject(id), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasAnyRole('REVIEWER', 'EDITOR')")
+	@PutMapping(value="/reviewed/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> reviewed(@PathVariable(value = "id") String id) throws Exception{
+		return new ResponseEntity<>(scientificPaperService.updateStatusReviewed(id), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasAnyRole('REVIEWER', 'EDITOR')")
+	@PutMapping(value="/revisionNeeded/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> revisionNeeded(@PathVariable(value = "id") String id) throws Exception{
+		return new ResponseEntity<>(scientificPaperService.updateStatusRevisionNeeded(id), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasAnyRole('REVIEWER', 'EDITOR')")
+	@PutMapping(value="/inReviewProcess/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> inReviewProcess(@PathVariable(value = "id") String id) throws Exception{
+		return new ResponseEntity<>(scientificPaperService.updateStatusInReviewProcess(id), HttpStatus.OK);
+	}
+	
+	
 	
 	/*@PreAuthorize("hasAnyRole('REVIEWER', 'AUTHOR', 'EDITOR')")
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
