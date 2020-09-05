@@ -7,6 +7,7 @@ import { RoleGuard } from './shared/guards/role.guard';
 import { AddReviewComponent } from './reviews/add-review/add-review.component';
 import { MyPublicationsComponent } from './publications/my-publications/my-publications.component';
 import { ReviewPublicationsComponent } from './publications/review-publications/review-publications.component';
+import { AddExpertiseComponent } from './add-expertise/add-expertise.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,12 @@ const routes: Routes = [
     component: ReviewPublicationsComponent,
     canActivate: [RoleGuard],
     data: {expectedRoles: 'ROLE_REVIEWER|ROLE_EDITOR'}
+  },
+  {
+    path: 'expertise/add',
+    component: AddExpertiseComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_AUTHOR|ROLE_REVIEWER|ROLE_EDITOR'}
   }
 ];
 

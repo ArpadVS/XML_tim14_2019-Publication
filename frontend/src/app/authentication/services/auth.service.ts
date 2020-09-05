@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from 'src/app/shared/services/base.service';
 import { User } from 'src/app/models/user.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LoginModel } from 'src/app/models/login.model';
 import { map } from 'rxjs/operators';
@@ -12,7 +12,8 @@ import { RegisterModel } from 'src/app/models/register.model';
 const ENDPOINTS = {
   LOGIN: '/user/login',
   REGISTER: '/user/register',
-  LOGOUT: '/user/logout'
+  LOGOUT: '/user/logout',
+  EXPERTISE: '/user/expertise'
 }
 
 
@@ -20,6 +21,13 @@ const ENDPOINTS = {
   providedIn: 'root'
 })
 export class AuthService extends BaseService {
+  httpOptions = {
+    headers: new HttpHeaders({
+      // 'Content-Type':  'application/xml',
+      // 'Response-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    })
+  };
 
   activeUser: User;
 
@@ -102,9 +110,6 @@ export class AuthService extends BaseService {
       return false;
     }
     const jwt = jwt_decode(actUser.token);
-    console.log('is reviewer');
-    console.log(jwt.role);
-    console.log(jwt.role === 'ROLE_REVIEWER');
     return jwt.role === 'ROLE_REVIEWER';
   }
 
@@ -115,13 +120,17 @@ export class AuthService extends BaseService {
       return false;
     }
     const jwt = jwt_decode(actUser.token);
-    console.log('is editor');
-    console.log(jwt.role);
-    console.log(jwt.role === 'ROLE_EDITOR');
     return jwt.role === 'ROLE_EDITOR';
   }
 
   canReview(){
     return this.isReviewer() || this.isEditor();
+  }
+
+  addExpertise(expertise: string){
+    this.http.put(`${this.baseUrl}${ENDPOINTS.EXPERTISE}` + '/' + expertise, this.httpOptions)
+      .subscribe(result => {
+        console.log(result);
+      });
   }
 }

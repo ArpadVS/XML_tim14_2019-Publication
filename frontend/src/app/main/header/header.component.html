@@ -6,10 +6,11 @@
       <button mat-button routerLink="publications/all"> Publications </button>
     </span>
       <span *ngIf="isUserLoggedIn">
+        <button mat-button routerLink="expertise/add"> Add Expertise </button>
         <button mat-button routerLink="publications/add"> Add Publication </button>
         <button mat-button routerLink="publications/my"> My Publications </button>
-        <button mat-button routerLink="publications/reviewTable"> For Review </button>
-        <button *ngIf="canReview" mat-button (click)="logout()">Log Out</button>
+        <button *ngIf="canReview" mat-button routerLink="publications/reviewTable"> For Review </button>
+        <button mat-button (click)="logout()">Log Out</button>
       </span>
      
     </mat-toolbar-row>

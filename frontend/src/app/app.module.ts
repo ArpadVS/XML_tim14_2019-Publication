@@ -19,6 +19,7 @@ import { AddPublicationComponent } from './publications/add-publication/add-publ
 import { AddReviewComponent } from './reviews/add-review/add-review.component';
 import { MyPublicationsComponent } from './publications/my-publications/my-publications.component';
 import { ReviewPublicationsComponent } from './publications/review-publications/review-publications.component';
+import { AddExpertiseComponent } from './add-expertise/add-expertise.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ReviewPublicationsComponent } from './publications/review-publications/
     AddReviewComponent,
     MyPublicationsComponent,
     ReviewPublicationsComponent,
+    AddExpertiseComponent,
   ],
   imports: [
     BrowserModule,
