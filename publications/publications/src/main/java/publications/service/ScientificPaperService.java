@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.catalina.util.ResourceSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,12 +17,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import publications.exceptions.NotFoundException;
-import publications.model.paper.ScientificPaper;
-import publications.model.paper.TPaperStatus;
-import publications.model.DTO.PaperViewDTO;
 import publications.model.DTO.ScientificPaperDTO;
 import publications.model.DTO.SearchDTO;
 import publications.model.DTO.SearchTextDTO;
+import publications.model.paper.TPaperStatus;
+import publications.model.user.User;
 import publications.repository.ScientificPaperRepository;
 import publications.util.db.fuseki_jena.FusekiManagement;
 import publications.util.transformations.HTMLTransformer;
@@ -148,13 +146,29 @@ public class ScientificPaperService {
 	}
 
 	public List<ScientificPaperDTO> searchByText(SearchTextDTO dto) {
-		String text= dto.getText();
-		String expression = String.format(
-				"//scientificPaper[title[contains(text(), '%s')] or keywords/keyword[contains(text(), '%s')]"
-				+ " or abstract/paragraph[contains(text(), '%s')] or content/chapter/title[contains(text(), '%s')] "
-				+ "or content/chapter/paragraph[contains(text(), '%s')]]", text,  text,  text,  text,  text);
-		ArrayList<ScientificPaperDTO> result= scientificPaperRepository.findMultipleByExpression(expression);
+		String text = dto.getText();
+		String expression = String
+				.format("//scientificPaper[title[contains(text(), '%s')] or keywords/keyword[contains(text(), '%s')]"
+						+ " or abstract/paragraph[contains(text(), '%s')] or content/chapter/title[contains(text(), '%s')] "
+						+ "or content/chapter/paragraph[contains(text(), '%s')]]", text, text, text, text, text);
+		ArrayList<ScientificPaperDTO> result = scientificPaperRepository.findMultipleByExpression(expression);
 		return result;
+	}
+
+	public ArrayList<ScientificPaperDTO> getByLoggedUser(User user) {
+		ArrayList<ScientificPaperDTO> all = getAll();
+		ArrayList<ScientificPaperDTO> filtered = new ArrayList<>();
+		for (ScientificPaperDTO dto : all) {
+			for (String author : dto.getAuthors()) {
+				if (author.equals(user.getFirst_name() + " " + user.getLast_name())) {
+					filtered.add(dto);
+					break;
+				}
+			}
+		}
+
+		return filtered;
+
 	}
 
 }

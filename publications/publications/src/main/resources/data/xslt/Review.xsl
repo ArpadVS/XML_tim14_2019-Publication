@@ -11,6 +11,38 @@
 				<title> Review </title>
 				<style type="text/css">
 					.tab {margin-left:40px;};
+					body {
+					font-family: sans-serif;
+					}
+
+					.bold {
+					font-weight: bold;
+					}
+
+					.italic {
+					font-style: italic;
+					}
+
+					.underline {
+					text-decoration:underline;
+					}
+
+					.align-right {
+					text-align: right;
+					}
+
+					.align-center {
+					text-align: center;
+					}
+
+					.align-justify {
+					text-align: justify:
+					}
+
+					.center-content {
+					margin: auto;
+					width: 750px;
+					}
 				</style>
 			</head>
 			<body>
@@ -24,9 +56,18 @@
 					<br />
 					Reviewer:
 					<div class="tab">
-						Name: <xsl:value-of select="ns2:review/ns2:reviewer/ns2:fullName"></xsl:value-of><br/>
-						Institution: <xsl:value-of select="ns2:review/ns2:reviewer/ns2:institution"></xsl:value-of><br/>
-						Email: <xsl:value-of select="ns2:review/ns2:reviewer/ns2:email"></xsl:value-of><br/>
+						Name:
+						<xsl:value-of
+							select="ns2:review/ns2:reviewer/ns2:fullName"></xsl:value-of>
+						<br />
+						Institution:
+						<xsl:value-of
+							select="ns2:review/ns2:reviewer/ns2:institution"></xsl:value-of>
+						<br />
+						Email:
+						<xsl:value-of
+							select="ns2:review/ns2:reviewer/ns2:email"></xsl:value-of>
+						<br />
 					</div>
 					<br />
 					Comments:
@@ -39,7 +80,8 @@
 							<br></br>
 							Comment:
 							<xsl:value-of select="ns2:comment"></xsl:value-of>
-							<br></br><br></br>
+							<br></br>
+							<br></br>
 						</xsl:for-each>
 					</div>
 					Summary:
@@ -50,6 +92,7 @@
 					<br />
 
 				</p>
+
 			</body>
 		</html>
 	</xsl:template>

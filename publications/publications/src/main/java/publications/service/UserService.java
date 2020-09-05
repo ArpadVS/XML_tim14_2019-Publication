@@ -138,5 +138,10 @@ public class UserService implements UserDetailsService{
 		return all;
 	}
 	
+	public User findByUsername(String username) throws NotFoundException {
+		String xPathExpression = String.format("//user[username='%s']", username);
+		return userRepository.findByExpression(xPathExpression);
+	}
+	
 	
 }
