@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,6 +34,7 @@ import publications.model.DTO.RegisterUserDTO;
 import publications.model.user.Role;
 import publications.model.user.User;
 import publications.model.user.converters.UserConverter;
+import publications.service.MailService;
 import publications.service.UserService;
 import publications.util.TokenUtils;
 import publications.util.marshalling.MarshallUser;
@@ -47,6 +49,9 @@ public class UserController {
 
 	@Autowired
 	public AuthenticationManager authenticationManager;
+	
+	@Autowired
+	public MailService mailService;
 
 	@Autowired
 	public TokenUtils tokenUtils;
@@ -139,6 +144,11 @@ public class UserController {
 	@GetMapping(value = "/svi")
 	public String test3() {
 		return "ALL WORKS";
+	}
+	
+	@GetMapping(value = "/testmail")
+	public void test4() throws MailException, InterruptedException {
+		mailService.sendPaperSubmissionToEditor("I am the author", "Paper name", "This is a cover letter");
 	}
 
 	@SuppressWarnings("rawtypes")
