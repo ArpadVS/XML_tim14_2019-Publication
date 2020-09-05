@@ -94,4 +94,34 @@ export class AuthService extends BaseService {
     const jwt = jwt_decode(actUser.token);
     return jwt.role === 'ROLE_ADMIN';
   }
+
+  isReviewer(){
+    const user: any = JSON.parse(localStorage.getItem('user'));
+    const actUser: User = user;
+    if (user == null || this.activeUser == null || actUser == null){
+      return false;
+    }
+    const jwt = jwt_decode(actUser.token);
+    console.log('is reviewer');
+    console.log(jwt.role);
+    console.log(jwt.role === 'ROLE_REVIEWER');
+    return jwt.role === 'ROLE_REVIEWER';
+  }
+
+  isEditor(){
+    const user: any = JSON.parse(localStorage.getItem('user'));
+    const actUser: User = user;
+    if (user == null || this.activeUser == null || actUser == null){
+      return false;
+    }
+    const jwt = jwt_decode(actUser.token);
+    console.log('is editor');
+    console.log(jwt.role);
+    console.log(jwt.role === 'ROLE_EDITOR');
+    return jwt.role === 'ROLE_EDITOR';
+  }
+
+  canReview(){
+    return this.isReviewer() || this.isEditor();
+  }
 }

@@ -99,7 +99,7 @@ public class ScientificPaperController {
 		return new ResponseEntity<>(ids, HttpStatus.CREATED);
 	}
 
-	@PreAuthorize("hasRole('EDITOR')")
+	@PreAuthorize("hasAnyRole('REVIEWER','EDITOR')")
 	@GetMapping(value = "/forReview", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getPapersForReview(){
 		return new ResponseEntity<>(scientificPaperService.getAllForReview(), HttpStatus.OK);

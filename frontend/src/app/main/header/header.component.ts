@@ -19,6 +19,9 @@ export class HeaderComponent implements OnInit {
     return !!this.authService.isLogedIn();
   }
 
+  get canReview(){
+    return !!this.authService.canReview();
+  }
   get isAdmin(){
     return this.authService.isAdmin();
   }

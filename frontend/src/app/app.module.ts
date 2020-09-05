@@ -18,6 +18,7 @@ import { AllPublicationsComponent } from './publications/all-publications/all-pu
 import { AddPublicationComponent } from './publications/add-publication/add-publication.component';
 import { AddReviewComponent } from './reviews/add-review/add-review.component';
 import { MyPublicationsComponent } from './publications/my-publications/my-publications.component';
+import { ReviewPublicationsComponent } from './publications/review-publications/review-publications.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MyPublicationsComponent } from './publications/my-publications/my-publi
     AddPublicationComponent,
     AddReviewComponent,
     MyPublicationsComponent,
+    ReviewPublicationsComponent,
   ],
   imports: [
     BrowserModule,

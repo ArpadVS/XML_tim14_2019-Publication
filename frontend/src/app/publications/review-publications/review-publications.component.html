@@ -1,0 +1,61 @@
+
+  <table mat-table style="width: 100%; margin-top: 1em;" class="mat-elevation-z8" [dataSource]="dataSource" class="mat-elevation-z8">
+    
+    <ng-container matColumnDef="Index">
+        <th mat-header-cell *matHeaderCellDef> # </th>
+        <td mat-cell *matCellDef="let element; let i = index;">{{i+1}}</td>
+      </ng-container>
+  
+    <ng-container matColumnDef="Author">
+        <th mat-header-cell *matHeaderCellDef >Author</th>
+        <td mat-cell *matCellDef="let publication">{{publication.authors}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let publication">{{publication.title}}</td>
+    </ng-container>
+
+  
+    <ng-container matColumnDef="HTML">
+      <th mat-header-cell *matHeaderCellDef> HTML </th>
+      <td mat-cell *matCellDef="let publication">
+        <button mat-raised-button color="primary" (click)="getHTML(publication.id)">
+            html
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PDF">
+      <th mat-header-cell *matHeaderCellDef> PDF </th>
+      <td mat-cell *matCellDef="let publication">
+        <button mat-raised-button color="primary" (click)="getPDF(publication.id)">
+            pdf
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Accept">
+        <th mat-header-cell *matHeaderCellDef> Accept </th>
+        <td mat-cell *matCellDef="let publication">
+          <button mat-raised-button color="primary" (click)="accept(publication.id)">
+              accept
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Reject">
+        <th mat-header-cell *matHeaderCellDef> Reject </th>
+        <td mat-cell *matCellDef="let publication">
+          <button mat-raised-button color="primary" (click)="reject(publication.id)">
+            reject
+          </button>
+        </td>
+      </ng-container>
+    
+    
+    <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+    
+    <tr mat-row *matRowDef="let row; columns: getDisplayedColumns()"></tr>
+  
+  </table>

@@ -34,8 +34,24 @@ export class PublicationService extends BaseService{
     this.http.post(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}`, paperLetter, this.httpOptions)
       .subscribe(result => {
         console.log(result);
-        console.log('dodat rad')
+        console.log('dodat rad');
         this.router.navigateByUrl('publications/all');
+      });
+  }
+
+  accept(id: string): void{
+    this.http.put(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}` + '/accept/' + id, this.httpOptions)
+      .subscribe(result => {
+        console.log(result);
+        console.log('accepted');
+      });
+  }
+
+  reject(id: string): void{
+    this.http.put(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}` + '/reject/' + id, this.httpOptions)
+      .subscribe(result => {
+        console.log(result);
+        console.log('rejected');
       });
   }
 
@@ -53,5 +69,9 @@ export class PublicationService extends BaseService{
 
   getMy(): Observable<any>{
     return this.http.get(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}` + '/myPapers', this.httpOptions);
+  }
+
+  getForReview(): Observable<any>{
+    return this.http.get(`${this.baseUrl}${ENDPOINTS.SCIENTIFIC_PAPER}` + '/forReview', this.httpOptions);
   }
 }
